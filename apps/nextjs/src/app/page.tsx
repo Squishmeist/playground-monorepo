@@ -1,41 +1,42 @@
-import { Suspense } from "react";
-import { Auth } from "@auth/component/auth";
-import {
-  CreatePostForm,
-  PostCardSkeleton,
-  PostList,
-} from "@dashboard/component/posts";
+import Link from "next/link";
 
-import { HydrateClient, prefetch, trpc } from "~/trpc/server";
+import { accountFlag, jobFlag } from "~/module/flags";
 
-export default function HomePage() {
-  prefetch(trpc.post.all.queryOptions());
+export default async function Page() {
+  const links = [
+    {
+      href: "/job",
+      label: "Job Page",
+      flag: jobFlag,
+    },
+    {
+      href: "/account",
+      label: "Account Page",
+      flag: accountFlag,
+    },
+  ];
 
   return (
-    <HydrateClient>
-      <main className="container h-screen py-16">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-primary">T3</span> Turbo
-          </h1>
-          <Auth />
-
-          <CreatePostForm />
-          <div className="w-full max-w-2xl overflow-y-scroll">
-            <Suspense
-              fallback={
-                <div className="flex w-full flex-col gap-4">
-                  <PostCardSkeleton />
-                  <PostCardSkeleton />
-                  <PostCardSkeleton />
-                </div>
-              }
-            >
-              <PostList />
-            </Suspense>
-          </div>
-        </div>
-      </main>
-    </HydrateClient>
+    <main className="container h-screen py-16">
+      <h1 className="mb-8 text-3xl font-bold">Home</h1>
+      <div>
+        {await Promise.all(
+          links.map(async (link) => {
+            const isEnabled = await link.flag();
+            return (
+              isEnabled && (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="mb-4 block text-blue-500 hover:underline"
+                >
+                  {link.label}
+                </Link>
+              )
+            );
+          }),
+        )}
+      </div>
+    </main>
   );
 }
