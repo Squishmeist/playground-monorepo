@@ -3,7 +3,7 @@ import type { Config } from "drizzle-kit";
 if (!process.env.DB_URL) throw new Error("Missing DB_URL");
 
 export default {
-  schema: "./src/schema.ts",
+  schema: "./src/schema/index.ts",
   dialect: "turso",
   dbCredentials: {
     url: process.env.DB_URL,

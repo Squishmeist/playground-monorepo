@@ -46,4 +46,4 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
   queryClient,
 });
 
-export { type RouterInputs, type RouterOutputs } from "@squishmeist/api";
+export { type AppRouterInputs, type AppRouterOutputs } from "@squishmeist/api";

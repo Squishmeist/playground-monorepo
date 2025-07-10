@@ -6,11 +6,12 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import type { Auth } from "@squishmeist/auth";
-import { db } from "@squishmeist/db/client";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
+
+import type { Auth } from "@squishmeist/auth";
+import { db } from "@squishmeist/db/client";
 
 /**
  * 1. CONTEXT
@@ -25,10 +26,16 @@ import { z, ZodError } from "zod/v4";
  * @see https://trpc.io/docs/server/context
  */
 
+export interface TRPCContext {
+  authApi: Auth["api"];
+  session: Awaited<ReturnType<Auth["api"]["getSession"]>>;
+  db: typeof db;
+}
+
 export const createTRPCContext = async (opts: {
   headers: Headers;
   auth: Auth;
-}) => {
+}): Promise<TRPCContext> => {
   const authApi = opts.auth.api;
   const session = await authApi.getSession({
     headers: opts.headers,

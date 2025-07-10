@@ -111,11 +111,11 @@ function MobileAuth() {
           session
             ? authClient.signOut()
             : authClient.signIn.social({
-                provider: "discord",
+                provider: "github",
                 callbackURL: "/",
               })
         }
-        title={session ? "Sign Out" : "Sign In With Discord"}
+        title={session ? "Sign Out" : "Sign In With Github"}
         color={"#5B65E9"}
       />
     </>

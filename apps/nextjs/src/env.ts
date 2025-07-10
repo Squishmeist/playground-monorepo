@@ -1,7 +1,8 @@
-import { authEnv } from "@squishmeist/auth/env";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets-zod";
 import { z } from "zod/v4";
+
+import { authEnv } from "@squishmeist/auth/env";
 
 export const env = createEnv({
   extends: [authEnv(), vercel()],
@@ -16,7 +17,7 @@ export const env = createEnv({
    */
   server: {
     DB_URL: z.string().url(),
-    DB_AUTH: z.string(),
+    DB_AUTH_TOKEN: z.string(),
   },
 
   /**

@@ -1,6 +1,6 @@
 "use client";
 
-import type { RouterOutputs } from "@squishmeist/api";
+import type { AppRouterOutputs } from "@squishmeist/api";
 import { CreatePostSchema } from "@squishmeist/db/schema";
 import { cn } from "@squishmeist/ui";
 import { Button } from "@squishmeist/ui/button";
@@ -115,7 +115,7 @@ export function PostList() {
 }
 
 export function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
+  post: AppRouterOutputs["post"]["all"][number];
 }) {
   const trpc = useTRPC();
   const queryClient = useQueryClient();

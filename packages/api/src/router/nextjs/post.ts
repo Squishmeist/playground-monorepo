@@ -3,7 +3,7 @@ import { desc, eq } from "@squishmeist/db";
 import { CreatePostSchema, Post } from "@squishmeist/db/schema";
 import { z } from "zod/v4";
 
-import { protectedProcedure, publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../../trpc";
 
 export const postRouter = {
   all: publicProcedure.query(({ ctx }) => {
