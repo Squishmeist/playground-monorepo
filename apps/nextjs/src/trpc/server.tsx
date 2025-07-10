@@ -1,12 +1,13 @@
-import type { AppRouter } from "@squishmeist/api";
 import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { cache } from "react";
 import { headers } from "next/headers";
-import { appRouter, createTRPCContext } from "@squishmeist/api";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
-import { auth } from "~/auth/server";
+import type { AppRouter } from "@squishmeist/api";
+import { appRouter, createTRPCContext } from "@squishmeist/api";
+
+import { auth } from "~/module/auth/server";
 import { createQueryClient } from "./query-client";
 
 /**

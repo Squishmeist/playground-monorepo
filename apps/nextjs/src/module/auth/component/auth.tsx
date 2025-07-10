@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@squishmeist/ui/button";
 
-import { auth, getSession } from "~/auth/server";
+import { auth, getSession } from "~/module/auth/server";
 
-export async function AuthShowcase() {
+export async function Auth() {
   const session = await getSession();
 
   if (!session) {

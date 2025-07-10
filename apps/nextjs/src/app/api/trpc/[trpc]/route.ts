@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
-import { appRouter, createTRPCContext } from "@squishmeist/api";
+import { auth } from "@auth/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { auth } from "~/auth/server";
+import { appRouter, createTRPCContext } from "@squishmeist/api";
 
 /**
  * Configure basic CORS headers

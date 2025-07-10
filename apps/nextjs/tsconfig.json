@@ -5,7 +5,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@auth/*": ["./src/module/auth/*"],
+      "@dashboard/*": ["./src/module/dashboard/*"]
     },
     "plugins": [{ "name": "next" }],
     "module": "esnext"
