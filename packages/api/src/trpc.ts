@@ -103,13 +103,57 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 });
 
 /**
+ * Observer middleware for logging requests, responses, and collecting stats
+ */
+const observerMiddleware = t.middleware(async ({ next, path, type, ctx }) => {
+  const startTime = Date.now();
+
+  // Log incoming request
+  console.log(
+    `[TRPC Observer] ${type.toUpperCase()} ${path} - User: ${ctx.session?.user?.id || "anonymous"}`,
+  );
+
+  try {
+    const result = await next();
+
+    const duration = Date.now() - startTime;
+
+    // Log successful response
+    console.log(
+      `[TRPC Observer] ✅ ${type.toUpperCase()} ${path} - ${duration}ms`,
+    );
+
+    // You could send metrics to your monitoring service here
+    // Example: metrics.increment('trpc.success', { path, type });
+    // Example: metrics.timing('trpc.duration', duration, { path, type });
+
+    return result;
+  } catch (error) {
+    const duration = Date.now() - startTime;
+
+    // Log error
+    console.error(
+      `[TRPC Observer] ❌ ${type.toUpperCase()} ${path} - ${duration}ms`,
+      error,
+    );
+
+    // You could send error metrics here
+    // Example: metrics.increment('trpc.error', { path, type, error: error.code });
+
+    throw error;
+  }
+});
+
+/**
  * Public (unauthed) procedure
  *
  * This is the base piece you use to build new queries and mutations on your
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure.use(timingMiddleware);
+export const publicProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(observerMiddleware);
 
 /**
  * Protected (authenticated) procedure
