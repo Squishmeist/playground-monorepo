@@ -7,34 +7,30 @@ import { toast } from "@squishmeist/ui/toast";
 
 import { useTRPC } from "~/trpc/react";
 
-export function Toggle() {
+export function Test() {
   const trpc = useTRPC();
   const router = useRouter();
 
   const { mutate } = useMutation(
-    trpc.flag.updateFlag.mutationOptions({
+    trpc.test.error.mutationOptions({
       onSuccess: async (data) => {
         toast.success(data.message);
         router.refresh();
       },
       onError: (err) => {
-        toast.error(
-          err.data?.code === "UNAUTHORIZED"
-            ? "You must be logged in"
-            : "Failed to update flag",
-        );
+        toast.error(err.message);
       },
     }),
   );
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <h2 className="text-xl font-semibold">Toggle Modules</h2>
+      <h2 className="text-xl font-semibold">Test</h2>
       <button
         className="rounded-lg bg-gray-800 p-2 text-white hover:cursor-pointer hover:bg-gray-700"
-        onClick={() => mutate({ name: "JOB" })}
+        onClick={() => mutate({ error: true })}
       >
-        toggle jobs
+        throw error
       </button>
     </div>
   );

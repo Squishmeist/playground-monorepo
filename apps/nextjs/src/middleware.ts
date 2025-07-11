@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { accountFlag, jobFlag } from "./module/flag";
 
 export async function middleware(request: NextRequest) {
-  console.log("Middleware is running");
-
   // Define route-to-flag mappings
   const protectedRoutes = [
     { path: "/account", flag: accountFlag },

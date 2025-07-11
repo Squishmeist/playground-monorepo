@@ -12,6 +12,7 @@ import { z, ZodError } from "zod/v4";
 
 import type { Auth } from "@squishmeist/auth";
 import { db } from "@squishmeist/db/client";
+import { logger } from "@squishmeist/observe";
 
 /**
  * 1. CONTEXT
@@ -80,69 +81,56 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createTRPCRouter = t.router;
 
 /**
- * Middleware for timing procedure execution and adding an articifial delay in development.
- *
- * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
- * network latency that would occur in production but not in local development.
- */
-const timingMiddleware = t.middleware(async ({ next, path }) => {
-  const start = Date.now();
-
-  if (t._config.isDev) {
-    // artificial delay in dev 100-500ms
-    const waitMs = Math.floor(Math.random() * 400) + 100;
-    await new Promise((resolve) => setTimeout(resolve, waitMs));
-  }
-
-  const result = await next();
-
-  const end = Date.now();
-  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
-
-  return result;
-});
-
-/**
  * Observer middleware for logging requests, responses, and collecting stats
+ *
+ * Adds artificial delay in development to simulate network latency.
  */
-const observerMiddleware = t.middleware(async ({ next, path, type, ctx }) => {
-  const startTime = Date.now();
+const observerMiddleware = t.middleware(
+  async ({ next, path, type, ctx, getRawInput }) => {
+    const startTime = Date.now();
 
-  // Log incoming request
-  console.log(
-    `[TRPC Observer] ${type.toUpperCase()} ${path} - User: ${ctx.session?.user?.id || "anonymous"}`,
-  );
+    if (t._config.isDev) {
+      // artificial delay in dev 100-500ms
+      const waitMs = Math.floor(Math.random() * 400) + 100;
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+    }
 
-  try {
     const result = await next();
-
     const duration = Date.now() - startTime;
 
-    // Log successful response
-    console.log(
-      `[TRPC Observer] ✅ ${type.toUpperCase()} ${path} - ${duration}ms`,
-    );
+    const rawInput = await getRawInput();
+
+    switch (result.ok) {
+      case true:
+        logger.info("✅ request completed", {
+          path,
+          type: type.toUpperCase(),
+          duration,
+          userId: ctx.session?.user?.id || "unknown",
+        });
+        break;
+      case false:
+        logger.error("❌ request failed", {
+          path,
+          type: type.toUpperCase(),
+          duration,
+          userId: ctx.session?.user?.id || "unknown",
+          input: rawInput,
+          error: {
+            code: result.error.code,
+            message: result.error.message,
+            name: result.error.name,
+          },
+        });
+        break;
+    }
 
     // You could send metrics to your monitoring service here
     // Example: metrics.increment('trpc.success', { path, type });
     // Example: metrics.timing('trpc.duration', duration, { path, type });
-
     return result;
-  } catch (error) {
-    const duration = Date.now() - startTime;
-
-    // Log error
-    console.error(
-      `[TRPC Observer] ❌ ${type.toUpperCase()} ${path} - ${duration}ms`,
-      error,
-    );
-
-    // You could send error metrics here
-    // Example: metrics.increment('trpc.error', { path, type, error: error.code });
-
-    throw error;
-  }
-});
+  },
+);
 
 /**
  * Public (unauthed) procedure
@@ -151,9 +139,7 @@ const observerMiddleware = t.middleware(async ({ next, path, type, ctx }) => {
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure
-  .use(timingMiddleware)
-  .use(observerMiddleware);
+export const publicProcedure = t.procedure.use(observerMiddleware);
 
 /**
  * Protected (authenticated) procedure
@@ -164,7 +150,7 @@ export const publicProcedure = t.procedure
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure
-  .use(timingMiddleware)
+  .use(observerMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
