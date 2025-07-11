@@ -17,7 +17,7 @@ export const logger = winston.createLogger({
     }),
     new LokiTransport({
       host: "http://127.0.0.1:3100",
-      labels: { app: "nextjs" },
+      labels: { service: "playground" },
       onConnectionError: (error) => {
         console.error("Loki connection error:", error);
       },

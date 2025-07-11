@@ -32,6 +32,7 @@ const handler = async (req: NextRequest) => {
       createTRPCContext({
         auth: auth,
         headers: req.headers,
+        app: "nextjs",
       }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);

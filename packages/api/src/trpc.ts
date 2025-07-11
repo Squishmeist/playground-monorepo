@@ -31,11 +31,13 @@ export interface TRPCContext {
   authApi: Auth["api"];
   session: Awaited<ReturnType<Auth["api"]["getSession"]>>;
   db: typeof db;
+  app: "nextjs" | "admin";
 }
 
 export const createTRPCContext = async (opts: {
   headers: Headers;
   auth: Auth;
+  app: TRPCContext["app"];
 }): Promise<TRPCContext> => {
   const authApi = opts.auth.api;
   const session = await authApi.getSession({
@@ -45,6 +47,7 @@ export const createTRPCContext = async (opts: {
     authApi,
     session,
     db,
+    app: opts.app,
   };
 };
 /**
@@ -103,6 +106,7 @@ const observerMiddleware = t.middleware(
     switch (result.ok) {
       case true:
         logger.info({
+          app: ctx.app,
           message: "✅ request successful",
           route: path,
           type: type.toUpperCase(),
@@ -114,6 +118,7 @@ const observerMiddleware = t.middleware(
         break;
       case false:
         logger.error({
+          app: ctx.app,
           message: "❌ request failed",
           route: path,
           type: type.toUpperCase(),
