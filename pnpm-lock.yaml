@@ -293,9 +293,9 @@ importers:
       '@squishmeist/db':
         specifier: workspace:*
         version: link:../db
-      '@squishmeist/observe':
+      '@squishmeist/telemetry':
         specifier: workspace:*
-        version: link:../observe
+        version: link:../telemetry
       '@squishmeist/validators':
         specifier: workspace:*
         version: link:../validators
@@ -417,7 +417,7 @@ importers:
         specifier: 'catalog:'
         version: 5.8.3
 
-  packages/observe:
+  packages/telemetry:
     dependencies:
       winston:
         specifier: 3.17.0

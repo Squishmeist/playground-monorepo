@@ -12,7 +12,7 @@ import { z, ZodError } from "zod/v4";
 
 import type { Auth } from "@squishmeist/auth";
 import { db } from "@squishmeist/db/client";
-import { logger } from "@squishmeist/observe";
+import { logger } from "@squishmeist/telemetry";
 
 /**
  * 1. CONTEXT
@@ -102,24 +102,28 @@ const observerMiddleware = t.middleware(
 
     switch (result.ok) {
       case true:
-        logger.info("✅ request completed", {
-          path,
+        logger.info({
+          message: "✅ request successful",
+          route: path,
           type: type.toUpperCase(),
           duration,
-          userId: ctx.session?.user?.id || "unknown",
+          labels: {
+            userId: ctx.session?.user?.id || "unknown",
+          },
         });
         break;
       case false:
-        logger.error("❌ request failed", {
-          path,
+        logger.error({
+          message: "❌ request failed",
+          route: path,
           type: type.toUpperCase(),
           duration,
-          userId: ctx.session?.user?.id || "unknown",
-          input: rawInput,
-          error: {
-            code: result.error.code,
-            message: result.error.message,
-            name: result.error.name,
+          labels: {
+            userId: ctx.session?.user?.id || "unknown",
+            input: JSON.stringify(rawInput),
+            errorCode: result.error.code,
+            errorMessage: result.error.message,
+            errorName: result.error.name,
           },
         });
         break;

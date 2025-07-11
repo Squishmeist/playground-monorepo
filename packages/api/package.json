@@ -21,7 +21,7 @@
   "dependencies": {
     "@squishmeist/auth": "workspace:*",
     "@squishmeist/db": "workspace:*",
-    "@squishmeist/observe": "workspace:*",
+    "@squishmeist/telemetry": "workspace:*",
     "@squishmeist/validators": "workspace:*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.2",
