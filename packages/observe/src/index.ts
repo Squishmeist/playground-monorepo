@@ -1,4 +1,5 @@
 import winston from "winston";
+import LokiTransport from "winston-loki";
 
 export const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",
@@ -13,6 +14,13 @@ export const logger = winston.createLogger({
         winston.format.colorize(),
         winston.format.simple(),
       ),
+    }),
+    new LokiTransport({
+      host: "http://127.0.0.1:3100",
+      labels: { app: "playground" },
+      onConnectionError: (error) => {
+        console.error("Loki connection error:", error);
+      },
     }),
   ],
 });
