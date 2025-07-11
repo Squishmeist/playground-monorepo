@@ -24,6 +24,7 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
+    "@vercel/otel": "^1.13.0",
     "flags": "catalog:",
     "next": "catalog:",
     "react": "catalog:react19",

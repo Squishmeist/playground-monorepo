@@ -15,7 +15,7 @@ const transports: winston.transport[] = [
 if (env().NODE_ENV === "production") {
   transports.push(
     new LokiTransport({
-      host: env().TELEMETRY_HOST,
+      host: env().TELEMETRY_LOG_HOST,
       basicAuth: env().TELEMETRY_AUTH,
       labels: { service: "playground" },
       onConnectionError: (error) => {
