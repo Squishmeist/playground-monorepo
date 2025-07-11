@@ -107,7 +107,7 @@ const observerMiddleware = t.middleware(
       case true:
         logger.info({
           app: ctx.app,
-          message: "✅ request successful",
+          message: "request successful",
           route: path,
           type: type.toUpperCase(),
           duration,
@@ -119,7 +119,7 @@ const observerMiddleware = t.middleware(
       case false:
         logger.error({
           app: ctx.app,
-          message: "❌ request failed",
+          message: "request failed",
           route: path,
           type: type.toUpperCase(),
           duration,
