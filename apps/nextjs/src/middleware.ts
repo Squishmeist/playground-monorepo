@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { accountFlag, jobFlag } from "./module/flags";
+import { accountFlag, jobFlag } from "./module/flag";
 
 export async function middleware(request: NextRequest) {
   console.log("Middleware is running");

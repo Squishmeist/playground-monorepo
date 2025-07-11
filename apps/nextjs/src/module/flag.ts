@@ -6,13 +6,7 @@ const flagCache = new Map<string, { value: boolean; expires: number }>();
 // no cache in development, 10 minutes in production
 const CACHE_TTL = process.env.NODE_ENV === "production" ? 10 * 60 * 1000 : 0;
 
-async function getFlag(
-  flagName: string,
-  forceRefresh?: boolean,
-): Promise<boolean> {
-  if (forceRefresh) {
-    flagCache.delete(flagName);
-  }
+async function getFlag(flagName: string): Promise<boolean> {
   const cached = flagCache.get(flagName);
   if (cached && cached.expires > Date.now()) return cached.value;
 
@@ -26,16 +20,19 @@ async function getFlag(
   return enabled;
 }
 
-export const accountFlag = flag({
-  key: "account-flag",
-  async decide() {
-    return await getFlag("ACCOUNT");
-  },
-});
+function createFlag(flagName: string) {
+  const flagInstance = flag({
+    key: `${flagName.toLowerCase()}-flag`,
+    async decide() {
+      return await getFlag(flagName);
+    },
+  });
 
-export const jobFlag = flag({
-  key: "job-flag",
-  async decide() {
-    return await getFlag("JOB");
-  },
-});
+  return async (forceRefresh?: boolean): Promise<boolean> => {
+    if (forceRefresh) flagCache.delete(flagName);
+    return await flagInstance();
+  };
+}
+
+export const accountFlag = createFlag("ACCOUNT");
+export const jobFlag = createFlag("JOB");
