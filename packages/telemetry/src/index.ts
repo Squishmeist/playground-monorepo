@@ -1,36 +1,52 @@
-import winston from "winston";
-import LokiTransport from "winston-loki";
+import { createLogger, format, transport, transports } from "winston";
+
+import { tryCatch } from "@squishmeist/util";
 
 import { env } from "../env";
 
-const transports: winston.transport[] = [
-  new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple(),
-    ),
+const _transports: transport[] = [
+  new transports.Console({
+    format: format.combine(format.colorize(), format.simple()),
   }),
 ];
 
 if (env().NODE_ENV === "production") {
-  transports.push(
-    new LokiTransport({
-      host: env().TELEMETRY_LOG_HOST,
-      basicAuth: env().TELEMETRY_LOG_AUTH,
-      labels: { service: "playground" },
-      onConnectionError: (error) => {
-        console.error("Loki connection error:", error);
-      },
-    }),
+  _transports.push(
+    new (class LokiTransport extends transports.Http {
+      async log(info: unknown) {
+        await sendLogToLoki(info);
+      }
+    })(),
   );
 }
 
-export const logger = winston.createLogger({
-  level: env().NODE_ENV === "production" ? "info" : "debug",
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.errors({ stack: true }),
-    winston.format.json(),
-  ),
-  transports,
+export const logger = createLogger({
+  level: "debug",
+  transports: _transports,
 });
+
+async function sendLogToLoki(info: unknown) {
+  const response = await tryCatch(
+    fetch(`${env().TELEMETRY_LOG_HOST}/loki/api/v1/push`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${env().TELEMETRY_LOG_AUTH}`,
+      },
+      body: JSON.stringify({
+        streams: [
+          {
+            stream: { service: "connect" },
+            values: [[`${Date.now()}000000`, JSON.stringify(info)]],
+          },
+        ],
+      }),
+    }),
+  );
+
+  if (response.error) {
+    console.error("Error sending log to Loki:", response.error);
+    return;
+  }
+  console.log("Loki response:", response.data.status);
+}

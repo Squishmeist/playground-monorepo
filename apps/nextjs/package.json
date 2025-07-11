@@ -18,6 +18,7 @@
     "@squishmeist/auth": "workspace:*",
     "@squishmeist/db": "workspace:*",
     "@squishmeist/ui": "workspace:*",
+    "@squishmeist/util": "workspace:*",
     "@squishmeist/validators": "workspace:*",
     "@t3-oss/env-nextjs": "catalog:",
     "@tanstack/react-query": "catalog:",

@@ -13,15 +13,13 @@ const config = {
     "@squishmeist/auth",
     "@squishmeist/db",
     "@squishmeist/ui",
+    "@squishmeist/util",
     "@squishmeist/validators",
   ],
 
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
-  experimental: {
-    clientInstrumentationHook: true,
-  },
 };
 
 export default config;

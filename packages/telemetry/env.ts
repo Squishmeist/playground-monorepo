@@ -10,7 +10,7 @@ export function env() {
     },
     runtimeEnvStrict: {
       TELEMETRY_LOG_HOST: process.env.TELEMETRY_LOG_HOST,
-      TELEMETRY_LOG_AUTH: process.env.TELEMETR_LOG_AUTH,
+      TELEMETRY_LOG_AUTH: process.env.TELEMETRY_LOG_AUTH,
       NODE_ENV: process.env.NODE_ENV,
     },
     skipValidation:
