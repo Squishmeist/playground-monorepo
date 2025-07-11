@@ -16,7 +16,7 @@ if (env().NODE_ENV === "production") {
   transports.push(
     new LokiTransport({
       host: env().TELEMETRY_LOG_HOST,
-      basicAuth: env().TELEMETRY_AUTH,
+      basicAuth: env().TELEMETRY_LOG_AUTH,
       labels: { service: "playground" },
       onConnectionError: (error) => {
         console.error("Loki connection error:", error);

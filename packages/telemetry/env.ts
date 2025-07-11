@@ -5,12 +5,12 @@ export function env() {
   return createEnv({
     server: {
       TELEMETRY_LOG_HOST: z.string().min(1),
-      TELEMETRY_AUTH: z.string().min(1),
+      TELEMETRY_LOG_AUTH: z.string().min(1),
       NODE_ENV: z.enum(["development", "production"]).optional(),
     },
     runtimeEnvStrict: {
       TELEMETRY_LOG_HOST: process.env.TELEMETRY_LOG_HOST,
-      TELEMETRY_AUTH: process.env.TELEMETRY_AUTH,
+      TELEMETRY_LOG_AUTH: process.env.TELEMETR_LOG_AUTH,
       NODE_ENV: process.env.NODE_ENV,
     },
     skipValidation:

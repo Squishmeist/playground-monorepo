@@ -7,6 +7,9 @@ export function register() {
     serviceName: "nextjs",
     traceExporter: new OTLPHttpJsonTraceExporter({
       url: env.TELEMETRY_TRACE_HOST,
+      headers: {
+        Authorization: `Bearer ${env.TELEMETRY_TRACE_AUTH}`,
+      },
     }),
   });
 }

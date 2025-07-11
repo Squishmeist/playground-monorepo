@@ -19,6 +19,7 @@ export const env = createEnv({
     DB_URL: z.string().url(),
     DB_AUTH_TOKEN: z.string().optional(),
     TELEMETRY_TRACE_HOST: z.string(),
+    TELEMETRY_TRACE_AUTH: z.string(),
   },
 
   /**
