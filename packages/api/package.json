@@ -19,6 +19,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
     "@squishmeist/auth": "workspace:*",
     "@squishmeist/db": "workspace:*",
     "@squishmeist/telemetry": "workspace:*",

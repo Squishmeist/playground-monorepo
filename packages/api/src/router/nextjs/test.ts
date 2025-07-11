@@ -1,8 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { trace } from "@opentelemetry/api";
 import { z } from "zod/v4";
-
-import { eq } from "@squishmeist/db";
-import { flag } from "@squishmeist/db/schema";
 
 import { publicProcedure } from "../../trpc";
 
@@ -14,7 +12,16 @@ export const testRouter = {
       }),
     )
     .mutation(async ({ input }) => {
+      const tracer = trace.getTracer("custom-tracer");
+      const span = tracer.startSpan("operation-name");
+
+      span.setAttributes({
+        "custom.attribute": "value",
+      });
+
       if (input.error) throw new Error(`Error requested by client.`);
+
+      span.end();
       return {
         message: "No error requested",
       };
