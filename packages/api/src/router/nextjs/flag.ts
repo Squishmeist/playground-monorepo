@@ -1,5 +1,4 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { trace } from "@opentelemetry/api";
 import { z } from "zod/v4";
 
 import { eq } from "@squishmeist/db";
@@ -16,12 +15,6 @@ export const flagRouter = {
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const tracer = trace.getTracer("flag-tracer");
-      const span = tracer.startSpan("update-flag");
-
-      span.setAttributes({
-        "database-transcation": "flag-update",
-      });
       return await ctx.db.transaction(async (tx) => {
         const _flag = await tx.query.flag.findFirst({
           where: (fields, { eq }) => eq(fields.name, input.name),
@@ -32,20 +25,11 @@ export const flagRouter = {
           },
         });
 
-        if (!_flag) {
-          span.end();
+        if (!_flag)
           throw new Error(`Flag with name ${input.name} does not exist.`);
-        }
 
         const enabled = input.enabled ?? !_flag.enabled;
-
-        span.setAttributes({
-          enabled,
-        });
-
         await tx.update(flag).set({ enabled }).where(eq(flag.id, _flag.id));
-
-        span.end();
 
         return {
           message: `Flag ${input.name} updated to ${enabled}`,

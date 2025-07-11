@@ -28,7 +28,7 @@ export const logger = createLogger({
 
 async function sendLogToLoki(info: unknown) {
   const response = await tryCatch(
-    fetch(`${env().TELEMETRY_LOG_HOST}/loki/api/v1/push`, {
+    fetch(`${env().TELEMETRY_LOG_HOST}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

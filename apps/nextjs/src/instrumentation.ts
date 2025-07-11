@@ -4,7 +4,7 @@ import { env } from "./env";
 
 export function register() {
   registerOTel({
-    serviceName: "nextjs",
+    serviceName: "playground",
     traceExporter: new OTLPHttpJsonTraceExporter({
       url: env.TELEMETRY_TRACE_HOST,
       headers: {
