@@ -17,7 +17,7 @@ export const env = createEnv({
    */
   server: {
     DB_URL: z.string().url(),
-    DB_AUTH_TOKEN: z.string(),
+    DB_AUTH_TOKEN: z.string().optional(),
   },
 
   /**
