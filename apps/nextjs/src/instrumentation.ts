@@ -8,7 +8,8 @@ export function register() {
     traceExporter: new OTLPHttpJsonTraceExporter({
       url: env.TELEMETRY_TRACE_HOST,
       headers: {
-        Authorization: `Basic ${env.TELEMETRY_TRACE_AUTH}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${env.TELEMETRY_TRACE_AUTH}`,
       },
     }),
   });
