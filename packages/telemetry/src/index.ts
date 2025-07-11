@@ -36,7 +36,7 @@ async function sendLogToLoki(info: unknown) {
       body: JSON.stringify({
         streams: [
           {
-            stream: { service: "connect" },
+            stream: { service: "playground" },
             values: [[`${Date.now()}000000`, JSON.stringify(info)]],
           },
         ],
