@@ -11,7 +11,7 @@ export const testRouter = {
         error: z.boolean(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation( ({ input }) => {
       const tracer = trace.getTracer("custom-tracer");
       const span = tracer.startSpan("operation-name");
 

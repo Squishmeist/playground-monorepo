@@ -5,12 +5,12 @@ import { Link, Stack } from "expo-router";
 import { LegendList } from "@legendapp/list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import type { RouterOutputs } from "~/utils/api";
+import type { AppRouterOutputs } from "~/utils/api";
 import { trpc } from "~/utils/api";
 import { authClient } from "~/utils/auth";
 
 function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
+  post: AppRouterOutputs["post"]["all"][number];
   onDelete: () => void;
 }) {
   return (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { api, trpc } from "~/trpc/server";
+import { api } from "~/trpc/server";
 
 export default async function Page() {
   const caller = await api();

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { cn } from "@squishmeist/ui";
 import { Label as LabelPrimitive } from "radix-ui";
+
+import { cn } from "@squishmeist/ui";
 
 export function Label({
   className,

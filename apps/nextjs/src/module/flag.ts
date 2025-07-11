@@ -2,9 +2,11 @@ import { flag } from "flags/next";
 
 import { db } from "@squishmeist/db/client";
 
+import { env } from "~/env";
+
 const flagCache = new Map<string, { value: boolean; expires: number }>();
 // no cache in development, 10 minutes in production
-const CACHE_TTL = process.env.NODE_ENV === "production" ? 10 * 60 * 1000 : 0;
+const CACHE_TTL = env.NODE_ENV === "production" ? 10 * 60 * 1000 : 0;
 
 async function getFlag(flagName: string): Promise<boolean> {
   const cached = flagCache.get(flagName);

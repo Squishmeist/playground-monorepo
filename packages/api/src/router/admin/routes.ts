@@ -1,9 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { desc, eq } from "@squishmeist/db";
-import { CreatePostSchema, Post } from "@squishmeist/db/schema";
-import { z } from "zod/v4";
 
-import { protectedProcedure, publicProcedure } from "../../trpc";
+import { protectedProcedure } from "../../trpc";
 
 /**
  * Admin-specific routes

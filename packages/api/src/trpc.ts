@@ -112,7 +112,7 @@ const observerMiddleware = t.middleware(
           type: type.toUpperCase(),
           duration,
           labels: {
-            userId: ctx.session?.user?.id || "unknown",
+            userId: ctx.session?.user.id ?? "unknown",
           },
         });
         break;
@@ -124,7 +124,7 @@ const observerMiddleware = t.middleware(
           type: type.toUpperCase(),
           duration,
           labels: {
-            userId: ctx.session?.user?.id || "unknown",
+            userId: ctx.session?.user.id ?? "unknown",
             input: JSON.stringify(rawInput),
             errorCode: result.error.code,
             errorMessage: result.error.message,

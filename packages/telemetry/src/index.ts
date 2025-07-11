@@ -1,4 +1,5 @@
-import { createLogger, format, transport, transports } from "winston";
+import type { transport } from "winston";
+import { createLogger, format, transports } from "winston";
 
 import { tryCatch } from "@squishmeist/util";
 

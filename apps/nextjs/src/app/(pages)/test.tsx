@@ -13,7 +13,7 @@ export function Test() {
 
   const { mutate } = useMutation(
     trpc.test.error.mutationOptions({
-      onSuccess: async (data) => {
+      onSuccess: (data) => {
         toast.success(data.message);
         router.refresh();
       },

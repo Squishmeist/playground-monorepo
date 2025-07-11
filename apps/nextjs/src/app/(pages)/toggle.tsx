@@ -13,7 +13,7 @@ export function Toggle() {
 
   const { mutate } = useMutation(
     trpc.flag.updateFlag.mutationOptions({
-      onSuccess: async (data) => {
+      onSuccess: (data) => {
         toast.success(data.message);
         router.refresh();
       },
