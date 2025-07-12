@@ -1,11 +1,31 @@
 import { sqliteTable } from "drizzle-orm/sqlite-core";
 
+export const userType = sqliteTable("user_type", (t) => ({
+  name: t.text().primaryKey().unique(),
+}));
+
+export const userRole = sqliteTable("user_role", (t) => ({
+  name: t.text().primaryKey().unique(),
+}));
+
 export const user = sqliteTable("user", (t) => ({
   id: t.text().primaryKey(),
   name: t.text().notNull(),
+  username: t.text().notNull(),
+  displayUsername: t.text().notNull(),
   email: t.text().notNull().unique(),
   emailVerified: t.integer({ mode: "boolean" }).notNull(),
   image: t.text(),
+  type: t
+    .text()
+    .notNull()
+    .references(() => userType.name)
+    .$default(() => "EXTERNAL"),
+  role: t
+    .text()
+    .notNull()
+    .references(() => userRole.name)
+    .$default(() => "USER"),
   createdAt: t.integer({ mode: "timestamp" }).notNull(),
   updatedAt: t.integer({ mode: "timestamp" }).notNull(),
 }));

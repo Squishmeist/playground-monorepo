@@ -2,7 +2,8 @@ import type { BetterAuthOptions } from "better-auth";
 import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { oAuthProxy } from "better-auth/plugins";
+import { nextCookies } from "better-auth/next-js";
+import { oAuthProxy, username } from "better-auth/plugins";
 
 import { db } from "@squishmeist/db/client";
 
@@ -16,7 +17,7 @@ export function initAuth(options: {
 }) {
   const config = {
     database: drizzleAdapter(db, {
-      provider: "pg",
+      provider: "sqlite",
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
@@ -29,6 +30,8 @@ export function initAuth(options: {
         productionURL: options.productionUrl,
       }),
       expo(),
+      username(),
+      nextCookies(),
     ],
     socialProviders: {
       github: {
@@ -36,6 +39,22 @@ export function initAuth(options: {
         clientSecret: options.githubClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/github`,
       },
+    },
+    user: {
+      additionalFields: {
+        type: {
+          type: "string",
+          input: false,
+        },
+        role: {
+          type: "string",
+          input: false,
+        },
+      },
+    },
+    emailAndPassword: {
+      enabled: true,
+      requireEmailVerification: false,
     },
     trustedOrigins: ["expo://"],
   } satisfies BetterAuthOptions;

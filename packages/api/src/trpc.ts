@@ -31,7 +31,7 @@ export interface TRPCContext {
   authApi: Auth["api"];
   session: Awaited<ReturnType<Auth["api"]["getSession"]>>;
   db: typeof db;
-  app: "nextjs" | "admin";
+  app: "nextjs" | "internal";
 }
 
 export const createTRPCContext = async (opts: {

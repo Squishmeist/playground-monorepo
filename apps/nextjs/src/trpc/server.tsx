@@ -7,7 +7,7 @@ import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { AppRouter } from "@squishmeist/api";
 import { appRouter, createTRPCContext } from "@squishmeist/api";
 
-import { auth } from "~/module/auth/server";
+import { auth } from "~/app/module/auth/server";
 import { createQueryClient } from "./query-client";
 
 /**

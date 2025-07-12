@@ -2,11 +2,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { protectedProcedure } from "../../trpc";
 
-/**
- * Admin-specific routes
- * Contains functionality that only admin users should have access to
- */
-export const adminRoutes = {
+export const info = {
   // User management
   getUser: protectedProcedure.query(({ ctx }) => {
     // This would typically query users table

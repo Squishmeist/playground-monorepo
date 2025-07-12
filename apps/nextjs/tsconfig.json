@@ -6,8 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "@auth/*": ["./src/module/auth/*"],
-      "@dashboard/*": ["./src/module/dashboard/*"]
+      "~auth/*": ["src/app/module/auth/*"],
+      "~dashboard/*": ["src/app/module/dashboard/*"]
     },
     "plugins": [{ "name": "next" }],
     "module": "esnext"

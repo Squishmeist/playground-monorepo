@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { accountFlag, jobFlag } from "./module/flag";
+import { accountFlag, jobFlag } from "./app/module/flag";
 
 export async function middleware(request: NextRequest) {
   // Define route-to-flag mappings

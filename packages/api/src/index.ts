@@ -1,8 +1,8 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
-import type { AdminRouter } from "./router/admin";
+import type { InternalRouter } from "./router/internal";
 import type { AppRouter } from "./router/nextjs";
-import { adminRouter } from "./router/admin";
+import { internalRouter } from "./router/internal";
 import { appRouter } from "./router/nextjs";
 import { createTRPCContext } from "./trpc";
 
@@ -22,17 +22,17 @@ type AppRouterInputs = inferRouterInputs<AppRouter>;
  **/
 type AppRouterOutputs = inferRouterOutputs<AppRouter>;
 
-// Admin-specific type inference helpers
-type AdminRouterInputs = inferRouterInputs<AdminRouter>;
-type AdminRouterOutputs = inferRouterOutputs<AdminRouter>;
+// Internal-specific type inference helpers
+type InternalRouterInputs = inferRouterInputs<InternalRouter>;
+type InternalRouterOutputs = inferRouterOutputs<InternalRouter>;
 
-export { createTRPCContext, appRouter, adminRouter };
+export { createTRPCContext, appRouter, internalRouter };
 
 export type {
   AppRouter,
   AppRouterInputs,
   AppRouterOutputs,
-  AdminRouter,
-  AdminRouterInputs,
-  AdminRouterOutputs,
+  InternalRouter,
+  InternalRouterInputs,
+  InternalRouterOutputs,
 };

@@ -22,6 +22,5 @@ export const auth = initAuth({
   githubClientSecret: env.AUTH_GITHUB_SECRET,
 });
 
-export const getSession = cache(async () =>
-  auth.api.getSession({ headers: await headers() }),
-);
+export const getSession = async () =>
+  auth.api.getSession({ headers: await headers() });
