@@ -4,7 +4,7 @@ import { getSession } from "~auth/server";
 import { Action } from "~dashboard/component";
 import { Main } from "~shared/component";
 
-import { accountFlag, jobFlag } from "~/app/module/flag";
+import { jobFlag, settingFlag } from "~/app/module/flag";
 
 export default async function Page() {
   const session = await getSession();
@@ -30,9 +30,9 @@ async function Authed() {
       flag: jobFlag,
     },
     {
-      href: "/account",
-      label: "Account",
-      flag: accountFlag,
+      href: "/setting",
+      label: "Setting",
+      flag: settingFlag,
     },
   ];
 

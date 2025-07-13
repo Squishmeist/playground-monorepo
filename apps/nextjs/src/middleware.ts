@@ -2,12 +2,12 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getSession } from "~auth/server";
 
-import { accountFlag, jobFlag } from "./app/module/flag";
+import { jobFlag, settingFlag } from "./app/module/flag";
 
 export async function middleware(request: NextRequest) {
   // Define route-to-flag mappings
   const protectedRoutes = [
-    { path: "/account", flag: accountFlag },
+    { path: "/setting", flag: settingFlag },
     { path: "/job", flag: jobFlag },
   ];
   const session = await getSession();

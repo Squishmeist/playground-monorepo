@@ -17,7 +17,7 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="flex h-full min-w-64 flex-col justify-between gap-6 border-r-2 border-border bg-background p-6">
+    <aside className="flex h-full min-w-64 flex-col justify-between gap-6 border-r border-gray-600 bg-background p-6">
       <div className="space-y-6">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <Nav />

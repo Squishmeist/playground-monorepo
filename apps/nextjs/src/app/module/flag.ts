@@ -36,5 +36,5 @@ function createFlag(flagName: string) {
   };
 }
 
-export const accountFlag = createFlag("ACCOUNT");
+export const settingFlag = createFlag("SETTING");
 export const jobFlag = createFlag("JOB");

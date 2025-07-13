@@ -8,7 +8,7 @@ export function Nav() {
 
   const items = [
     { href: "/", label: "Dashboard", flag: true },
-    { href: "/account", label: "Account", flag: true },
+    { href: "/setting", label: "Setting", flag: true },
     { href: "/job", label: "Job", flag: false },
   ];
 

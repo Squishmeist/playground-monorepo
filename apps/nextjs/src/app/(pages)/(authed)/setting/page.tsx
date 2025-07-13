@@ -11,7 +11,7 @@ export default async function Page() {
 
   return (
     <Main>
-      <h1 className="text-3xl font-bold">Account</h1>
+      <h1 className="text-3xl font-bold">Setting</h1>
       <div className="rounded-lg bg-background p-2">
         <p>email: {session.user.email}</p>
         <p>name: {session.user.name}</p>
