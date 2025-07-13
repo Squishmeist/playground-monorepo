@@ -1,7 +1,7 @@
+import { Internal } from "~setting/component";
 import { Main } from "~shared/component";
 
 import { api } from "~/trpc/server";
-import { Internal } from "./internal";
 
 export default async function Page() {
   const trpc = await api();

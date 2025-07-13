@@ -10,6 +10,17 @@ export const jobRoute = {
   all: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.query.job.findMany({
       where: (fields, { isNull }) => isNull(fields.deletedAt),
+      columns: {
+        id: true,
+        title: true,
+        description: true,
+        group: true,
+        assignedTo: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        updatedBy: true,
+      },
       orderBy: desc(job.updatedAt),
     });
   }),
