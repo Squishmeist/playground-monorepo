@@ -1,9 +1,9 @@
 "use client";
 
-import { AppRouterOutputs } from "@squishmeist/api";
-import { Button } from "@squishmeist/ui/button";
+import { stopImpersonation } from "~auth/impersonate";
 
-import { stopImpersonation } from "~/app/module/auth/impersonate";
+import { AppRouterOutputs } from "@squishmeist/api";
+import { Button } from "@squishmeist/ui/atom";
 
 interface Props {
   session: NonNullable<AppRouterOutputs["auth"]["session"]>;

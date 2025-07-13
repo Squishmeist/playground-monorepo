@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "~auth/client";
 
-import { Button } from "@squishmeist/ui/button";
+import { Button } from "@squishmeist/ui/atom";
 
 export function Nav() {
   const pathname = usePathname();
@@ -18,8 +18,9 @@ export function Nav() {
   ];
 
   async function handleSignout() {
-    signOut();
+    await signOut();
     router.push("/");
+    router.refresh();
   }
 
   return (

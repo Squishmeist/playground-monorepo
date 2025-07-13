@@ -1,44 +1,71 @@
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import { APIError } from "better-auth/api";
+"use client";
 
-import { Button } from "@squishmeist/ui/button";
+import { useRouter } from "next/navigation";
+import { z } from "zod/v4";
+
+import { Button } from "@squishmeist/ui/atom";
+import { Form, FormInput, useForm } from "@squishmeist/ui/form";
 import { toast } from "@squishmeist/ui/toast";
 
-import { auth, getSession } from "../server";
+import { authClient } from "../client";
 
-export async function SignIn() {
+export function SignIn() {
+  const { signIn } = authClient;
+  const router = useRouter();
+
+  const formSchema = z.object({
+    username: z.string().min(1, "Username is required"),
+    password: z.string().min(1, "Password is required"),
+  });
+  type FormType = z.infer<typeof formSchema>;
+
+  const form = useForm({
+    schema: formSchema,
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  async function handleSignIn(data: FormType) {
+    await signIn.username(
+      {
+        username: data.username,
+        password: data.password,
+      },
+      {
+        onError: (error) => {
+          toast.error(error.error.message);
+        },
+        onSuccess: (data) => {
+          toast.success("Signed in successfully");
+          router.refresh();
+        },
+      },
+    );
+  }
+
   return (
-    <form className="flex max-w-80 flex-col gap-4">
-      <input type="text" name="username" placeholder="Username" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <Button
-        size="lg"
-        formAction={async (formData) => {
-          "use server";
-          try {
-            const username = formData.get("username") as string;
-            const password = formData.get("password") as string;
-
-            const res = await auth.api.signInUsername({
-              body: {
-                username,
-                password,
-              },
-              headers: await headers(),
-            });
-            if (!res) {
-              console.error("Failed to sign in");
-              return;
-            }
-          } catch (error) {
-            console.error("Error signing in:", error);
-          }
-          redirect("/");
-        }}
+    <Form {...form}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit((data) => {
+          handleSignIn(data);
+        })}
       >
-        Sign in with Username
-      </Button>
-    </form>
+        <FormInput
+          control={form.control}
+          name="username"
+          placeholder="Username"
+        />
+        <FormInput
+          control={form.control}
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+        <Button type="submit">Signin</Button>
+      </form>
+    </Form>
   );
 }

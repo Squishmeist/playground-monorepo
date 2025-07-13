@@ -1,4 +1,5 @@
-import { Nav } from "~/app/module/shared/component/nav";
+import { Nav } from "~shared/component/nav";
+
 import { api } from "~/trpc/server";
 import { Internal } from "./internal";
 
@@ -9,11 +10,10 @@ export default async function Page() {
   if (!session) return;
 
   return (
-    <main className="flex flex-col items-center justify-center">
+    <main className="flex flex-col items-center justify-center gap-6">
       <Nav />
       <div className="flex h-full w-full max-w-7xl flex-col gap-6">
         <h1 className="mb-8 text-3xl font-bold">Account</h1>
-
         <p className="break-words bg-blue-400">
           {JSON.stringify(session.user)}
         </p>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SignIn, SignUp } from "~auth/component";
+import { Flow } from "~auth/component";
 import { getSession } from "~auth/server";
 import { Action } from "~dashboard/component";
 import { Nav } from "~shared/component";
@@ -9,6 +9,21 @@ import { accountFlag, jobFlag } from "~/app/module/flag";
 export default async function Page() {
   const session = await getSession();
 
+  if (!session) return <Unauthed />;
+  return <Authed />;
+}
+
+function Unauthed() {
+  return (
+    <main className="flex flex-col items-center justify-center gap-6">
+      <div className="flex h-full w-full max-w-7xl flex-col items-center gap-6 pt-20">
+        <Flow />
+      </div>
+    </main>
+  );
+}
+
+async function Authed() {
   const links = [
     {
       href: "/job",
@@ -23,15 +38,9 @@ export default async function Page() {
   ];
 
   return (
-    <main className="flex flex-col items-center justify-center">
+    <main className="flex flex-col items-center justify-center gap-6">
       <Nav />
       <div className="flex h-full w-full max-w-7xl flex-col gap-6">
-        {!session && (
-          <div className="flex flex-col gap-4">
-            <SignIn />
-            <SignUp />
-          </div>
-        )}
         <Action />
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-semibold">Flag Modules</h2>

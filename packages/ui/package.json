@@ -5,9 +5,10 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./atom": "./src/atom/index.ts",
+    "./form": "./src/form/index.ts",
     "./button": "./src/button.tsx",
     "./dropdown-menu": "./src/dropdown-menu.tsx",
-    "./form": "./src/form.tsx",
     "./input": "./src/input.tsx",
     "./label": "./src/label.tsx",
     "./theme": "./src/theme.tsx",

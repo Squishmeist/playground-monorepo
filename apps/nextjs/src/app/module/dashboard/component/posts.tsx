@@ -9,7 +9,6 @@ import {
 import type { AppRouterOutputs } from "@squishmeist/api";
 import { CreatePostSchema } from "@squishmeist/db/schema";
 import { cn } from "@squishmeist/ui";
-import { Button } from "@squishmeist/ui/button";
 import {
   Form,
   FormControl,
@@ -18,10 +17,11 @@ import {
   FormMessage,
   useForm,
 } from "@squishmeist/ui/form";
-import { Input } from "@squishmeist/ui/input";
 import { toast } from "@squishmeist/ui/toast";
 
 import { useTRPC } from "~/trpc/react";
+import { Button } from "../../../../../../../packages/ui/src/atom/button";
+import { Input } from "../../../../../../../packages/ui/src/atom/input";
 
 export function CreatePostForm() {
   const trpc = useTRPC();

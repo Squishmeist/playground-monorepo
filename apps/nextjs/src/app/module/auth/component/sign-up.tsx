@@ -1,48 +1,84 @@
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
 
-import { Button } from "@squishmeist/ui/button";
+import { useRouter } from "next/navigation";
+import { z } from "zod/v4";
 
-import { auth } from "../server";
+import { Button } from "@squishmeist/ui/atom";
+import { Form, FormInput, useForm } from "@squishmeist/ui/form";
+import { toast } from "@squishmeist/ui/toast";
 
-export async function SignUp() {
+import { authClient } from "../client";
+
+export function SignUp() {
+  const { signUp } = authClient;
+  const router = useRouter();
+
+  const formSchema = z.object({
+    email: z.email("Invalid email").min(1, "Email is required"),
+    name: z.string().min(1, "Name is required"),
+    username: z.string().min(1, "Username is required"),
+    password: z.string().min(1, "Password is required"),
+  });
+  type FormType = z.infer<typeof formSchema>;
+
+  const form = useForm({
+    schema: formSchema,
+    defaultValues: {
+      email: "",
+      name: "",
+      username: "",
+      password: "",
+    },
+  });
+
+  async function handleSignIn(data: FormType) {
+    await signUp.email(
+      {
+        email: data.email,
+        name: data.name,
+        username: data.username,
+        password: data.password,
+      },
+      {
+        onError: (error) => {
+          toast.error(error.error.message);
+        },
+        onSuccess: (data) => {
+          toast.success("Signed in successfully");
+          router.refresh();
+        },
+      },
+    );
+  }
+
   return (
-    <form className="flex max-w-80 flex-col gap-4">
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="text" name="name" placeholder="Name" required />
-      <input type="text" name="username" placeholder="Username" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <Button
-        size="lg"
-        formAction={async (formData) => {
-          "use server";
-          try {
-            const email = formData.get("email") as string;
-            const name = formData.get("name") as string;
-            const username = formData.get("username") as string;
-            const password = formData.get("password") as string;
-
-            const res = await auth.api.signUpEmail({
-              body: {
-                email,
-                name,
-                password,
-                username,
-              },
-              headers: await headers(),
-            });
-            if (!res) {
-              console.log("No URL returned from signInSocial");
-              return;
-            }
-          } catch (error) {
-            console.error("Error signing up:", error);
-          }
-          redirect("/");
-        }}
+    <Form {...form}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit((data) => {
+          handleSignIn(data);
+        })}
       >
-        Sign up
-      </Button>
-    </form>
+        <FormInput
+          control={form.control}
+          name="email"
+          placeholder="Email"
+          type="email"
+        />
+        <FormInput control={form.control} name="name" placeholder="Name" />
+        <FormInput
+          control={form.control}
+          name="username"
+          placeholder="Username"
+        />
+        <FormInput
+          control={form.control}
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+        <Button type="submit">Signup</Button>
+      </form>
+    </Form>
   );
 }

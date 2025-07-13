@@ -2,7 +2,9 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@squishmeist/ui";
 
-export function Input({ className, ...props }: ComponentProps<"input">) {
+export type InputProps = ComponentProps<"input">;
+
+export function Input({ className, ...props }: InputProps) {
   return (
     <input
       className={cn(

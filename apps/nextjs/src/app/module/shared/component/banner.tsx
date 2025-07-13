@@ -1,4 +1,4 @@
-import { Impersonate } from "~/app/(pages)/account/impersonate";
+import { Impersonate } from "~/app/(pages)/(authed)/account/impersonate";
 import { api } from "~/trpc/server";
 
 export async function Banner() {

@@ -18,7 +18,7 @@ import {
 
 import { cn } from "@squishmeist/ui";
 
-import { Label } from "./label";
+import { Label } from "../atom";
 
 export { FormProvider as Form, useFieldArray } from "react-hook-form";
 
