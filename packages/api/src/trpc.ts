@@ -43,20 +43,47 @@ export const createTRPCContext = async (opts: {
   app: TRPCContext["app"];
 }): Promise<TRPCContext> => {
   const authApi = opts.auth.api;
+  const impersonateUser = opts.headers.get("x-impersonate-user");
   const session = await authApi.getSession({
     headers: opts.headers,
   });
-  const impersonateUser = opts.headers.get("x-impersonate-user");
 
-  if (impersonateUser && session?.user.type === "INTERNAL") {
-    console.log(
-      `Impersonating user ${impersonateUser} for session ${session.user.id}`,
-    );
+  if (!impersonateUser || session?.user.type !== "INTERNAL") {
+    return {
+      authApi,
+      session: session ?? undefined,
+      db,
+      app: opts.app,
+    };
+  }
+
+  console.log(
+    `Impersonating user ${impersonateUser} for session ${session.user.id}`,
+  );
+
+  const effectiveUser = await db.query.user.findFirst({
+    where: (user, { eq }) => eq(user.id, impersonateUser),
+  });
+  if (!effectiveUser) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: `User with ID ${impersonateUser} not found`,
+    });
+  }
+  if (effectiveUser.type !== "EXTERNAL") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Can only impersonate EXTERNAL users",
+    });
   }
 
   return {
     authApi,
-    session: session ?? undefined,
+    session: {
+      session: session.session,
+      user: effectiveUser,
+      impersonatedBy: session.user,
+    },
     db,
     app: opts.app,
   };
