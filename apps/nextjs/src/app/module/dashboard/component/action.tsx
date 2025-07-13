@@ -41,7 +41,7 @@ export function Action() {
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <h2 className="text-xl font-semibold">Toggle Modules</h2>
+      <h2>Toggle Modules</h2>
       <div className="space-x-4">
         <button
           className="rounded-lg bg-white/20 p-2 text-white hover:cursor-pointer hover:bg-gray-700"

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Flow } from "~auth/component";
 import { getSession } from "~auth/server";
 import { Action } from "~dashboard/component";
-import { Nav } from "~shared/component";
+import { Main } from "~shared/component";
 
 import { accountFlag, jobFlag } from "~/app/module/flag";
 
@@ -15,10 +15,9 @@ export default async function Page() {
 
 function Unauthed() {
   return (
-    <main className="flex flex-col items-center justify-center gap-6">
-      <div className="flex h-full w-full max-w-7xl flex-col items-center gap-6 pt-20">
-        <Flow />
-      </div>
+    <main className="flex h-screen w-full flex-col items-center gap-2 pt-20">
+      <h1>Auth</h1>
+      <Flow />
     </main>
   );
 }
@@ -38,32 +37,29 @@ async function Authed() {
   ];
 
   return (
-    <main className="flex flex-col items-center justify-center gap-6">
-      <Nav />
-      <div className="flex h-full w-full max-w-7xl flex-col gap-6">
-        <Action />
-        <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold">Flag Modules</h2>
-          <div>
-            {await Promise.all(
-              links.map(async (link) => {
-                const isEnabled = await link.flag();
-                return (
-                  isEnabled && (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="mb-4 block text-blue-500 hover:underline"
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                );
-              }),
-            )}
-          </div>
+    <Main>
+      <Action />
+      <div className="flex flex-col gap-4">
+        <h2>Flag Modules</h2>
+        <div>
+          {await Promise.all(
+            links.map(async (link) => {
+              const isEnabled = await link.flag();
+              return (
+                isEnabled && (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="mb-4 block text-blue-500 hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              );
+            }),
+          )}
         </div>
       </div>
-    </main>
+    </Main>
   );
 }

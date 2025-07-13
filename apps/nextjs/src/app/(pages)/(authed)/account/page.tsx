@@ -1,4 +1,4 @@
-import { Nav } from "~shared/component/nav";
+import { Main } from "~shared/component";
 
 import { api } from "~/trpc/server";
 import { Internal } from "./internal";
@@ -10,15 +10,15 @@ export default async function Page() {
   if (!session) return;
 
   return (
-    <main className="flex flex-col items-center justify-center gap-6">
-      <Nav />
-      <div className="flex h-full w-full max-w-7xl flex-col gap-6">
-        <h1 className="mb-8 text-3xl font-bold">Account</h1>
-        <p className="break-words bg-blue-400">
-          {JSON.stringify(session.user)}
-        </p>
-        {session.user.type === "INTERNAL" && <Internal users={externalUsers} />}
+    <Main>
+      <h1 className="text-3xl font-bold">Account</h1>
+      <div className="rounded-lg bg-background p-2">
+        <p>email: {session.user.email}</p>
+        <p>name: {session.user.name}</p>
+        <p>type: {session.user.type}</p>
+        <p>role: {session.user.role}</p>
       </div>
-    </main>
+      {session.user.type === "INTERNAL" && <Internal users={externalUsers} />}
+    </Main>
   );
 }

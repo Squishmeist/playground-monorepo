@@ -1,5 +1,5 @@
-import { Impersonate } from "~/app/(pages)/(authed)/account/impersonate";
 import { api } from "~/trpc/server";
+import { Impersonate } from "./impersonate";
 
 export async function Banner() {
   const trpc = await api();
