@@ -1,24 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { AppRouterOutputs } from "@squishmeist/api";
 
-import { users } from "./data";
+import { startImpersonation } from "~/app/module/auth/impersonate";
 
-export function Internal() {
-  const externalUsers = users.filter((user) => user.type === "EXTERNAL");
-  const router = useRouter();
+interface Props {
+  users: AppRouterOutputs["auth"]["externalUsers"];
+}
 
-  function impersonate(userId: string) {
-    router.push(`/account?impersonate=${userId}`);
-  }
-
+export function Internal({ users }: Props) {
   return (
     <div>
-      {externalUsers.map((user) => (
+      {users.map((user) => (
         <div
           key={user.id}
-          className="border-b p-4"
-          onClick={() => impersonate(user.id)}
+          className="border-b p-4 hover:cursor-pointer hover:bg-gray-800"
+          onClick={() => startImpersonation(user.id)}
         >
           <p>Name: {user.name}</p>
           <p>Type: {user.type}</p>

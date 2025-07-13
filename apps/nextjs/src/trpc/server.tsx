@@ -1,6 +1,6 @@
 import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { cache } from "react";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
@@ -17,6 +17,11 @@ import { createQueryClient } from "./query-client";
 const createContext = cache(async () => {
   const heads = new Headers(await headers());
   heads.set("x-trpc-source", "rsc");
+
+  // Check for impersonation cookie and add it as a header
+  const cookieStore = await cookies();
+  const impersonateUser = cookieStore.get("impersonate-user")?.value;
+  if (impersonateUser) heads.set("x-impersonate-user", impersonateUser);
 
   return createTRPCContext({
     headers: heads,

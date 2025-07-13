@@ -25,14 +25,20 @@ export const OPTIONS = () => {
 };
 
 const handler = async (req: NextRequest) => {
+  // Extract impersonation cookie and add as header
+  const headers = new Headers(req.headers);
+  const impersonateUser = req.cookies.get("impersonate-user")?.value;
+
+  if (impersonateUser) headers.set("x-impersonate-user", impersonateUser);
+
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
     createContext: () =>
       createTRPCContext({
-        auth: auth,
-        headers: req.headers,
+        auth,
+        headers,
         app: "nextjs",
       }),
     onError({ error, path }) {

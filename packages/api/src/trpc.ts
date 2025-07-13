@@ -14,6 +14,8 @@ import type { Auth } from "@squishmeist/auth";
 import { db } from "@squishmeist/db/client";
 import { logger } from "@squishmeist/telemetry";
 
+type Session = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>;
+
 /**
  * 1. CONTEXT
  *
@@ -26,10 +28,11 @@ import { logger } from "@squishmeist/telemetry";
  *
  * @see https://trpc.io/docs/server/context
  */
-
 export interface TRPCContext {
   authApi: Auth["api"];
-  session: Awaited<ReturnType<Auth["api"]["getSession"]>>;
+  session?: Session & {
+    impersonatedBy?: Session["user"];
+  };
   db: typeof db;
   app: "nextjs" | "internal";
 }
@@ -43,9 +46,17 @@ export const createTRPCContext = async (opts: {
   const session = await authApi.getSession({
     headers: opts.headers,
   });
+  const impersonateUser = opts.headers.get("x-impersonate-user");
+
+  if (impersonateUser && session?.user.type === "INTERNAL") {
+    console.log(
+      `Impersonating user ${impersonateUser} for session ${session.user.id}`,
+    );
+  }
+
   return {
     authApi,
-    session,
+    session: session ?? undefined,
     db,
     app: opts.app,
   };
