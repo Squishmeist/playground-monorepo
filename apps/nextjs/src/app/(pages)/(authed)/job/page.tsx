@@ -1,17 +1,21 @@
+import { Create } from "~job/component";
 import { Main } from "~shared/component";
 
 import { api } from "~/trpc/server";
 
 export default async function Page() {
   const trpc = await api();
-
   const job = await trpc.job.all();
 
   return (
     <Main>
-      <h1>Job</h1>
-      <p>Track and manage job assignments across your groups.</p>
-
+      <div className="flex w-full flex-row items-center justify-between">
+        <div>
+          <h1>Job</h1>
+          <p>Track and manage job assignments across your groups.</p>
+        </div>
+        <Create />
+      </div>
       <div>
         <h2>Job List</h2>
         <ul>

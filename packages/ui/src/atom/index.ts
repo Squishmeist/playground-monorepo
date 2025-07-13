@@ -1,5 +1,5 @@
 export { Button, type ButtonProps, buttonVariants } from "./button";
-export { Input } from "./input";
+export { Input, type InputProps } from "./input";
 export { Label } from "./label";
 export {
   AlertDialog,

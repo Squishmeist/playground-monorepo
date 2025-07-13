@@ -23,19 +23,6 @@ function Unauthed() {
 }
 
 async function Authed() {
-  const links = [
-    {
-      href: "/job",
-      label: "Job",
-      flag: jobFlag,
-    },
-    {
-      href: "/setting",
-      label: "Setting",
-      flag: settingFlag,
-    },
-  ];
-
   return (
     <Main>
       <Action />

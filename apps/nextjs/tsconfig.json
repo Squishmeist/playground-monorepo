@@ -9,6 +9,7 @@
       "~shared/*": ["src/app/module/shared/*"],
       "~auth/*": ["src/app/module/auth/*"],
       "~dashboard/*": ["src/app/module/dashboard/*"],
+      "~job/*": ["src/app/module/job/*"],
       "~setting/*": ["src/app/module/setting/*"]
     },
     "plugins": [{ "name": "next" }],
