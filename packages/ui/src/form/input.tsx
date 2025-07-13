@@ -1,6 +1,7 @@
-import { Control, FieldValues, Path } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
 
-import { Input, InputProps } from "../atom";
+import type { InputProps } from "../atom";
+import { Input } from "../atom";
 import { FormControl, FormField, FormItem, FormMessage } from "./base";
 
 export interface FormInputProps<T extends FieldValues = FieldValues>

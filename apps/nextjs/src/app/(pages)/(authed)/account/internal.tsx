@@ -2,7 +2,7 @@
 
 import { startImpersonation } from "~auth/impersonate";
 
-import { AppRouterOutputs } from "@squishmeist/api";
+import type { AppRouterOutputs } from "@squishmeist/api";
 
 interface Props {
   users: AppRouterOutputs["auth"]["externalUsers"];

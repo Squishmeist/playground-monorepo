@@ -2,7 +2,7 @@
 
 import { stopImpersonation } from "~auth/impersonate";
 
-import { AppRouterOutputs } from "@squishmeist/api";
+import type { AppRouterOutputs } from "@squishmeist/api";
 import { Button } from "@squishmeist/ui/atom";
 
 interface Props {

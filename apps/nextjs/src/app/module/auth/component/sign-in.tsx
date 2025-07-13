@@ -37,7 +37,7 @@ export function SignIn() {
         onError: (error) => {
           toast.error(error.error.message);
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast.success("Signed in successfully");
           router.refresh();
         },
@@ -49,8 +49,8 @@ export function SignIn() {
     <Form {...form}>
       <form
         className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit((data) => {
-          handleSignIn(data);
+        onSubmit={form.handleSubmit(async (data) => {
+          await handleSignIn(data);
         })}
       >
         <FormInput

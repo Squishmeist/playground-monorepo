@@ -31,7 +31,7 @@ export function SignUp() {
     },
   });
 
-  async function handleSignIn(data: FormType) {
+  async function handleSignUp(data: FormType) {
     await signUp.email(
       {
         email: data.email,
@@ -43,7 +43,7 @@ export function SignUp() {
         onError: (error) => {
           toast.error(error.error.message);
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast.success("Signed in successfully");
           router.refresh();
         },
@@ -55,8 +55,8 @@ export function SignUp() {
     <Form {...form}>
       <form
         className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit((data) => {
-          handleSignIn(data);
+        onSubmit={form.handleSubmit(async (data) => {
+          await handleSignUp(data);
         })}
       >
         <FormInput
