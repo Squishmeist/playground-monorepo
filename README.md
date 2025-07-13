@@ -22,6 +22,15 @@ A playground for a monorepo exploring feature flags and observability.
   - Error tracking with detailed context
   - Input logging for debugging
 
+## 🧑‍💼 User Impersonation
+
+- **Impersonation Cookie**: Set an `impersonateUser` cookie to specify which user to impersonate.
+- **Header Propagation**: The impersonation value is passed in the request header for all API calls.
+- **tRPC Context Extraction**: In the tRPC `createContext`, the impersonated user is extracted from the header and used to override the session user for the request.
+- **Use Cases**:
+  - Internal users can act as other users for support or debugging.
+  - All actions performed while impersonating are attributed to the impersonated user.
+
 ## 🛠️ Setup & Development
 
 ### Local Database
