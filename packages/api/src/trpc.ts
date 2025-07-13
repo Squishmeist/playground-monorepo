@@ -122,11 +122,11 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createTRPCRouter = t.router;
 
 /**
- * Observer middleware for logging requests, responses, and collecting stats
+ * Telemetry middleware for logging requests, responses, and collecting stats
  *
  * Adds artificial delay in development to simulate network latency.
  */
-const observerMiddleware = t.middleware(
+const telemetryMiddleware = t.middleware(
   async ({ next, path, type, ctx, getRawInput }) => {
     const startTime = Date.now();
 
@@ -151,6 +151,7 @@ const observerMiddleware = t.middleware(
           duration,
           labels: {
             userId: ctx.session?.user.id ?? "unknown",
+            impersonatedBy: ctx.session?.impersonatedBy?.id ?? "none",
           },
         });
         break;
@@ -163,6 +164,7 @@ const observerMiddleware = t.middleware(
           duration,
           labels: {
             userId: ctx.session?.user.id ?? "unknown",
+            impersonatedBy: ctx.session?.impersonatedBy?.id ?? "none",
             input: JSON.stringify(rawInput),
             errorCode: result.error.code,
             errorMessage: result.error.message,
@@ -186,7 +188,7 @@ const observerMiddleware = t.middleware(
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure.use(observerMiddleware);
+export const publicProcedure = t.procedure.use(telemetryMiddleware);
 
 /**
  * Protected (authenticated) procedure
@@ -197,7 +199,7 @@ export const publicProcedure = t.procedure.use(observerMiddleware);
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure
-  .use(observerMiddleware)
+  .use(telemetryMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });

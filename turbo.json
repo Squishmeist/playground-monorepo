@@ -48,8 +48,6 @@
   "globalEnv": [
     "DB_URL",
     "DB_AUTH_TOKEN",
-    "AUTH_GITHUB_ID",
-    "AUTH_GITHUB_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
     "PORT"

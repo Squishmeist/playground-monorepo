@@ -18,9 +18,8 @@ export const auth = initAuth({
   baseUrl,
   productionUrl: `https://${env.VERCEL_PROJECT_PRODUCTION_URL ?? "squishmeist.com"}`,
   secret: env.AUTH_SECRET,
-  githubClientId: env.AUTH_GITHUB_ID,
-  githubClientSecret: env.AUTH_GITHUB_SECRET,
 });
 
-export const getSession = async () =>
-  auth.api.getSession({ headers: await headers() });
+export const getSession = cache(async () =>
+  auth.api.getSession({ headers: await headers() }),
+);

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { SignIn, SignOut, SignUp } from "~auth/component";
+import { SignIn, SignUp } from "~auth/component";
 import { getSession } from "~auth/server";
+import { Action } from "~dashboard/component";
+import { Nav } from "~shared/component";
 
 import { accountFlag, jobFlag } from "~/app/module/flag";
-import { Test } from "./test";
-import { Toggle } from "./toggle";
 
 export default async function Page() {
   const session = await getSession();
@@ -23,21 +23,18 @@ export default async function Page() {
   ];
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center p-20">
+    <main className="flex flex-col items-center justify-center">
+      <Nav />
       <div className="flex h-full w-full max-w-7xl flex-col gap-6">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        {session ? (
-          <SignOut name={session.user.name} />
-        ) : (
+        {!session && (
           <div className="flex flex-col gap-4">
             <SignIn />
             <SignUp />
           </div>
         )}
-        <Test />
-        <Toggle />
+        <Action />
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold">Modules</h2>
+          <h2 className="text-xl font-semibold">Flag Modules</h2>
           <div>
             {await Promise.all(
               links.map(async (link) => {

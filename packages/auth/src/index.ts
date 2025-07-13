@@ -11,9 +11,6 @@ export function initAuth(options: {
   baseUrl: string;
   productionUrl: string;
   secret: string | undefined;
-
-  githubClientId: string;
-  githubClientSecret: string;
 }) {
   const config = {
     database: drizzleAdapter(db, {
@@ -33,13 +30,6 @@ export function initAuth(options: {
       username(),
       nextCookies(),
     ],
-    socialProviders: {
-      github: {
-        clientId: options.githubClientId,
-        clientSecret: options.githubClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/github`,
-      },
-    },
     user: {
       additionalFields: {
         type: {

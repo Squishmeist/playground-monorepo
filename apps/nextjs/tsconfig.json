@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
+      "~shared/*": ["src/app/module/shared/*"],
       "~auth/*": ["src/app/module/auth/*"],
       "~dashboard/*": ["src/app/module/dashboard/*"]
     },

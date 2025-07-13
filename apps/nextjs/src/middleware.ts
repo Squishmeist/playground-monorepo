@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { getSession } from "~auth/server";
 
 import { accountFlag, jobFlag } from "./app/module/flag";
 
@@ -9,12 +10,17 @@ export async function middleware(request: NextRequest) {
     { path: "/account", flag: accountFlag },
     { path: "/job", flag: jobFlag },
   ];
+  const session = await getSession();
 
   // Check each protected route
   for (const route of protectedRoutes) {
     if (request.nextUrl.pathname.startsWith(route.path)) {
-      const isEnabled = await route.flag();
+      if (!session) {
+        console.log(`No session found for ${route.path}, redirecting to home`);
+        return NextResponse.redirect(new URL("/", request.url));
+      }
 
+      const isEnabled = await route.flag();
       if (!isEnabled) {
         console.log(`${route.path} flag is disabled, redirecting to home`);
         return NextResponse.redirect(new URL("/", request.url));
