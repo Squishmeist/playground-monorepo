@@ -3,14 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function Nav() {
-  const pathname = usePathname();
+interface Props {
+  items: { href: string; label: string; flag: boolean }[];
+}
 
-  const items = [
-    { href: "/", label: "Dashboard", flag: true },
-    { href: "/setting", label: "Setting", flag: true },
-    { href: "/job", label: "Job", flag: false },
-  ];
+export function Nav({ items }: Props) {
+  const pathname = usePathname();
 
   return (
     <nav className="flex w-full flex-col gap-2">

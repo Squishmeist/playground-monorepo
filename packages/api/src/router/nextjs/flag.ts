@@ -6,7 +6,7 @@ import { flag } from "@squishmeist/db/schema";
 
 import { publicProcedure } from "../../trpc";
 
-export const flagRouter = {
+export const flagRoute = {
   updateFlag: publicProcedure
     .input(
       z.object({
@@ -19,17 +19,15 @@ export const flagRouter = {
         const _flag = await tx.query.flag.findFirst({
           where: (fields, { eq }) => eq(fields.name, input.name),
           columns: {
-            id: true,
             name: true,
             enabled: true,
           },
         });
-
         if (!_flag)
           throw new Error(`Flag with name ${input.name} does not exist.`);
 
         const enabled = input.enabled ?? !_flag.enabled;
-        await tx.update(flag).set({ enabled }).where(eq(flag.id, _flag.id));
+        await tx.update(flag).set({ enabled }).where(eq(flag.name, _flag.name));
 
         return {
           message: `Flag ${input.name} updated to ${enabled}`,

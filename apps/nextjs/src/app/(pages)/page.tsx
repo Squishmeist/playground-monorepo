@@ -39,27 +39,6 @@ async function Authed() {
   return (
     <Main>
       <Action />
-      <div className="flex flex-col gap-4">
-        <h2>Flag Modules</h2>
-        <div>
-          {await Promise.all(
-            links.map(async (link) => {
-              const isEnabled = await link.flag();
-              return (
-                isEnabled && (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="mb-4 block text-blue-500 hover:underline"
-                  >
-                    {link.label}
-                  </Link>
-                )
-              );
-            }),
-          )}
-        </div>
-      </div>
     </Main>
   );
 }

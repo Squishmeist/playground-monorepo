@@ -3,7 +3,7 @@ import { z } from "zod/v4";
 
 import { publicProcedure } from "../../trpc";
 
-export const testRouter = {
+export const testRoute = {
   error: publicProcedure
     .input(
       z.object({

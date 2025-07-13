@@ -12,10 +12,11 @@ export const info = {
 
   // Analytics and statistics
   getAnalytics: protectedProcedure.query(async ({ ctx }) => {
-    const totalPosts = await ctx.db.query.Post.findMany();
+    const totalGroups = await ctx.db.query.group.findMany();
+    const totalUsers = await ctx.db.query.user.findMany();
     return {
-      totalPosts: totalPosts.length,
-      // Add more analytics as needed
+      totalGroups: totalGroups.length,
+      totalUsers: totalUsers.length,
     };
   }),
 } satisfies TRPCRouterRecord;

@@ -1,12 +1,9 @@
-import Link from "next/link";
+import { Main } from "~shared/component";
 
 export default function Page() {
   return (
-    <main className="container h-screen py-16">
-      <h1 className="mb-8 text-3xl font-bold">Job</h1>
-      <Link href="/" className="text-blue-500 hover:underline">
-        Go to Home Page
-      </Link>
-    </main>
+    <Main>
+      <h1>Job</h1>
+    </Main>
   );
 }
