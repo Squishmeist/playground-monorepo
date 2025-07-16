@@ -19,6 +19,11 @@ const items = [
     icon: Home,
   },
   {
+    title: "Users",
+    url: "/users",
+    icon: Inbox,
+  },
+  {
     title: "Job",
     url: "/job",
     icon: Inbox,

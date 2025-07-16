@@ -23,7 +23,7 @@ export default async function Layout({ children }: Props) {
           <div className="size-7 border" />
           <div className="size-7 border" />
         </header>
-        <div className="p-6">{children}</div>
+        <div className="space-y-6 p-6">{children}</div>
       </main>
     </SidebarProvider>
   );

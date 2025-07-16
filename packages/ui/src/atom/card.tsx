@@ -23,7 +23,7 @@ export function CardHeader({
     <div
       data-slot="card-header"
       className={cn(
-        "@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5",
+        "@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 grid auto-rows-min grid-rows-[auto_auto] items-start",
         className,
       )}
       {...props}
@@ -38,10 +38,7 @@ export function CardTitle({
   return (
     <div
       data-slot="card-title"
-      className={cn(
-        "text-sm font-medium tracking-tight text-muted-foreground",
-        className,
-      )}
+      className={cn("text-2xl font-medium tracking-tight", className)}
       {...props}
     />
   );
@@ -83,7 +80,7 @@ export function CardContent({
   return (
     <div
       data-slot="card-content"
-      className={cn("text-xs text-muted-foreground", className)}
+      className={cn("space-y-6 text-xs text-muted-foreground", className)}
       {...props}
     />
   );
