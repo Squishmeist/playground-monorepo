@@ -6,12 +6,12 @@
   "tailwind": {
     "config": "../../tooling/tailwind/web.ts",
     "css": "unused.css",
-    "baseColor": "zinc",
+    "baseColor": "neutral",
     "cssVariables": true
   },
   "aliases": {
     "utils": "@squishmeist/ui",
     "components": "src/",
-    "ui": "src/"
+    "ui": "src/atom/"
   }
 }

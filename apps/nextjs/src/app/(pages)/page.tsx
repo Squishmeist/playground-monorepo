@@ -1,16 +1,12 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Flow } from "~auth/component";
 import { getSession } from "~auth/server";
-import { Action } from "~dashboard/component";
-import { Main } from "~shared/component";
-
-import { jobFlag, settingFlag } from "~/app/module/flag";
 
 export default async function Page() {
   const session = await getSession();
 
-  if (!session) return <Unauthed />;
-  return <Authed />;
+  if (session) return redirect("/dashboard");
+  return <Unauthed />;
 }
 
 function Unauthed() {
@@ -19,13 +15,5 @@ function Unauthed() {
       <h1>Auth</h1>
       <Flow />
     </main>
-  );
-}
-
-async function Authed() {
-  return (
-    <Main>
-      <Action />
-    </Main>
   );
 }

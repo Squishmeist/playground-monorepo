@@ -1,3 +1,5 @@
+import { Badge } from "@squishmeist/ui/atom";
+
 import { api } from "~/trpc/server";
 import { Impersonate } from "./impersonate";
 
@@ -13,10 +15,8 @@ export async function Banner() {
   const internalUser = internal();
 
   return (
-    <div className="sticky top-0 z-50 w-full">
-      {internalUser && (
-        <div className="bg-blue-400 px-2 py-1">{`INTERNAL USER: ${internalUser.name}`}</div>
-      )}
+    <div className="sticky top-0 z-50 flex min-h-10 w-full items-center gap-2">
+      {internalUser && <Badge variant="outline">Internal</Badge>}
       <Impersonate session={session} />
     </div>
   );

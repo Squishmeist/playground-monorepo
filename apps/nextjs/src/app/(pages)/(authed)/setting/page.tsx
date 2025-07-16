@@ -1,16 +1,17 @@
+import { Suspense } from "react";
 import { Internal } from "~setting/component";
-import { Main } from "~shared/component";
+
+import { Skeletons } from "@squishmeist/ui/molecule";
 
 import { api } from "~/trpc/server";
 
 export default async function Page() {
   const trpc = await api();
-  const externalUsers = await trpc.auth.externalUsers();
   const session = await trpc.auth.session();
   if (!session) return;
 
   return (
-    <Main>
+    <>
       <h1 className="text-3xl font-bold">Setting</h1>
       <div className="rounded-lg bg-background p-2">
         <p>email: {session.user.email}</p>
@@ -18,7 +19,17 @@ export default async function Page() {
         <p>type: {session.user.type}</p>
         <p>role: {session.user.role}</p>
       </div>
-      {session.user.type === "INTERNAL" && <Internal users={externalUsers} />}
-    </Main>
+
+      <Suspense fallback={<Skeletons num={3} />}>
+        {session.user.type === "INTERNAL" && <Test />}
+      </Suspense>
+    </>
   );
+}
+
+async function Test() {
+  const trpc = await api();
+  const externalUsers = await trpc.auth.externalUsers();
+
+  return <Internal users={externalUsers} />;
 }

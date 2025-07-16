@@ -7,7 +7,7 @@ export function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
+        "flex flex-col justify-between rounded-xl border bg-card p-6 text-card-foreground shadow-sm",
         className,
       )}
       {...props}
@@ -23,7 +23,7 @@ export function CardHeader({
     <div
       data-slot="card-header"
       className={cn(
-        "@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6",
+        "@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5",
         className,
       )}
       {...props}
@@ -38,7 +38,10 @@ export function CardTitle({
   return (
     <div
       data-slot="card-title"
-      className={cn("font-semibold leading-none", className)}
+      className={cn(
+        "text-sm font-medium tracking-tight text-muted-foreground",
+        className,
+      )}
       {...props}
     />
   );
@@ -80,7 +83,7 @@ export function CardContent({
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6", className)}
+      className={cn("text-xs text-muted-foreground", className)}
       {...props}
     />
   );

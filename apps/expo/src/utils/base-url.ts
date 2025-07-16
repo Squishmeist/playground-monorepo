@@ -14,7 +14,8 @@ export const getBaseUrl = () => {
    * baseUrl to your production API URL.
    */
   const debuggerHost = Constants.expoConfig?.hostUri;
-  const localhost = debuggerHost?.split(":")[0];
+  // const localhost = debuggerHost?.split(":")[0];
+  const localhost = "192.168.50.13";
 
   if (!localhost) {
     // return "https://squishmeist.com";

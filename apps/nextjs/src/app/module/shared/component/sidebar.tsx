@@ -1,24 +1,57 @@
-import { SignOut } from "~auth/component";
+import { Home, Inbox, Settings } from "lucide-react";
 
-import { jobFlag, settingFlag } from "../../flag";
-import { Nav } from "./nav";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@squishmeist/ui/atom";
 
-export async function Sidebar() {
-  const items: { href: string; label: string; flag: boolean }[] = [
-    { href: "/", label: "Dashboard", flag: true },
-    { href: "/job", label: "Job", flag: await jobFlag() },
-    { href: "/setting", label: "Setting", flag: await settingFlag() },
-  ];
+// Menu items.
+const items = [
+  {
+    title: "Home",
+    url: "/dashboard",
+    icon: Home,
+  },
+  {
+    title: "Job",
+    url: "/job",
+    icon: Inbox,
+  },
+  {
+    title: "Settings",
+    url: "/setting",
+    icon: Settings,
+  },
+];
 
+export function AppSidebar() {
   return (
-    <aside className="flex h-full min-w-64 flex-col justify-between gap-6 border-r border-gray-600 bg-background p-6">
-      <div className="space-y-6">
-        <h1>Playground</h1>
-        <Nav items={items} />
-      </div>
-      <div>
-        <SignOut />
-      </div>
-    </aside>
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 }

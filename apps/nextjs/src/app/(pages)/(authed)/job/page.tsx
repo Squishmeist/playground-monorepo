@@ -1,5 +1,4 @@
 import { Create } from "~job/component";
-import { Main } from "~shared/component";
 
 import { api } from "~/trpc/server";
 
@@ -8,7 +7,7 @@ export default async function Page() {
   const job = await trpc.job.all();
 
   return (
-    <Main>
+    <>
       <div className="flex w-full flex-row items-center justify-between">
         <div>
           <h1>Job</h1>
@@ -26,6 +25,6 @@ export default async function Page() {
           ))}
         </ul>
       </div>
-    </Main>
+    </>
   );
 }
