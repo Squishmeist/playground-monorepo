@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { PortalHost } from "@rn-primitives/portal";
 import { useColorScheme } from "nativewind";
 
 import { queryClient } from "~/utils/api";
@@ -29,6 +30,7 @@ export default function RootLayout() {
         }}
       />
       <StatusBar />
+      <PortalHost />
     </QueryClientProvider>
   );
 }
