@@ -12,11 +12,11 @@ export function Action() {
   const trpc = useTRPC();
   const router = useRouter();
 
-  const { mutate } = useMutation(
-    trpc.org.contractorStep2.mutationOptions({
+  const { mutate, isPending } = useMutation(
+    trpc.org.contractorStep1.mutationOptions({
       onSuccess: (suc) => {
         toast.success(suc.message);
-        router.push(`/org?step=3`);
+        router.push(`/signup//org?step=2`);
       },
       onError: (err) => {
         toast.error(err.message);
@@ -26,12 +26,13 @@ export function Action() {
 
   function onClick() {
     mutate({
-      street: "123 Example St",
-      city: "Example City",
-      county: "Example County",
-      postcode: "12345",
+      name: "Test Organisation",
     });
   }
 
-  return <Button onClick={onClick}>Next</Button>;
+  return (
+    <Button disabled={isPending} onClick={onClick}>
+      Next
+    </Button>
+  );
 }

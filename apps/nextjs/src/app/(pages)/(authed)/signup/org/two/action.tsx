@@ -13,10 +13,10 @@ export function Action() {
   const router = useRouter();
 
   const { mutate } = useMutation(
-    trpc.org.contractorStep4.mutationOptions({
+    trpc.org.contractorStep2.mutationOptions({
       onSuccess: (suc) => {
         toast.success(suc.message);
-        router.push(`/org?step=4`);
+        router.push(`/signup/org?step=3`);
       },
       onError: (err) => {
         toast.error(err.message);
@@ -26,10 +26,12 @@ export function Action() {
 
   function onClick() {
     mutate({
-      hasInstalledEvPoint: false,
-      numPointsInstalled: 10,
+      street: "123 Example St",
+      city: "Example City",
+      county: "Example County",
+      postcode: "12345",
     });
   }
 
-  return <Button onClick={onClick}>Submit</Button>;
+  return <Button onClick={onClick}>Next</Button>;
 }

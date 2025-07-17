@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: Props) {
   const trpc = await api();
 
   const _step = Number(step);
-  if (!_step) redirect("/org?step=1");
+  if (!_step) redirect("/signup/org?step=1");
 
   const access = await trpc.org.accessStep(_step);
 

@@ -13,7 +13,7 @@ export default async function Four() {
     <div>
       <p>{JSON.stringify(info)}</p>
       <div className="flex gap-2">
-        <Link href="/org?step=3" className={buttonVariants()}>
+        <Link href="/signup/org?step=3" className={buttonVariants()}>
           Back
         </Link>
         <Action />
