@@ -6,14 +6,14 @@ import { jobFlag, settingFlag } from "./app/module/flag";
 
 export async function middleware(request: NextRequest) {
   // Define route-to-flag mappings
-  const protectedRoutes = [
+  const flagRoutes = [
     { path: "/setting", flag: settingFlag },
     { path: "/job", flag: jobFlag },
   ];
   const session = await getSession();
 
   // Check each protected route
-  for (const route of protectedRoutes) {
+  for (const route of flagRoutes) {
     if (request.nextUrl.pathname.startsWith(route.path)) {
       if (!session) {
         console.log(`No session found for ${route.path}, redirecting to home`);

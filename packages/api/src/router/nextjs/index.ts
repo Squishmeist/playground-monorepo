@@ -3,6 +3,7 @@ import { authRoute } from "./auth";
 import { flagRoute } from "./flag";
 import { groupRoute } from "./group";
 import { jobRoute } from "./job";
+import { orgRoute } from "./org";
 import { testRoute } from "./test";
 
 export const appRouter = createTRPCRouter({
@@ -11,6 +12,7 @@ export const appRouter = createTRPCRouter({
   job: jobRoute,
   flag: flagRoute,
   test: testRoute,
+  org: orgRoute,
 });
 
 // export type definition of API
