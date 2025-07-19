@@ -36,14 +36,14 @@ export default function Page() {
   );
 }
 
-type User = {
+interface User {
   id: string;
   name: string;
   role: string;
   organization: string;
   status: string;
   lastActive: string;
-};
+}
 
 const columns: ColumnDef<User>[] = [
   {

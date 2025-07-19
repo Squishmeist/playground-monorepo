@@ -1,4 +1,5 @@
-import { Skeleton, SkeletonProps } from "../atom";
+import type { SkeletonProps } from "../atom";
+import { Skeleton } from "../atom";
 import { cn } from "../util";
 
 export interface SkeletonsProps extends SkeletonProps {

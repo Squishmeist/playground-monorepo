@@ -12,8 +12,7 @@ export default async function Page({ params }: Props) {
 
   console.log("Org data:", org);
 
-  if (!org || org.code === "NOT_FOUND")
-    return <div>Organisation not found</div>;
+  if (org.code === "NOT_FOUND") return <div>Organisation not found</div>;
 
   if (org.code !== "APPROVED") {
     return (

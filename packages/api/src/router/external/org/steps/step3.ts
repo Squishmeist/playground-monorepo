@@ -29,10 +29,8 @@ export const getContractorStep3 = protectedProcedure.query(async ({ ctx }) => {
         step3Data: orgContractorSignup.step3Data,
       })
       .from(org)
-      .innerJoin(orgContractorSignup, (eq: any) =>
-        eq(org.id, orgContractorSignup.orgId),
-      )
-      .where((eq: any) => eq(org.applicantId, ctx.session.user.id));
+      .innerJoin(orgContractorSignup, eq(org.id, orgContractorSignup.orgId))
+      .where(eq(org.applicantId, ctx.session.user.id));
 
     const _org = response[0];
     if (!_org) throw orgNotFound();
@@ -69,10 +67,8 @@ export const contractorStep3 = protectedProcedure
           step: orgContractorSignup.step,
         })
         .from(org)
-        .innerJoin(orgContractorSignup, (eq: any) =>
-          eq(org.id, orgContractorSignup.orgId),
-        )
-        .where((eq: any) => eq(org.applicantId, ctx.session.user.id));
+        .innerJoin(orgContractorSignup, eq(org.id, orgContractorSignup.orgId))
+        .where(eq(org.applicantId, ctx.session.user.id));
       const _org = response[0];
       if (!_org) throw orgNotFound();
       if (_org.status !== "IN_PROGRESS") throw orgNotInProgress;

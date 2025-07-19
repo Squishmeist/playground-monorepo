@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createTRPCContext } from "@squishmeist/api";
+import { createTRPCContext, externalRouter } from "@squishmeist/api";
 
 import { auth } from "~/app/module/auth/server";
 
@@ -25,21 +25,17 @@ export const OPTIONS = () => {
 };
 
 const handler = async (req: NextRequest) => {
-  // Extract impersonation cookie and add as header
   const headers = new Headers(req.headers);
-  const impersonateUser = req.cookies.get("impersonate-user")?.value;
-
-  if (impersonateUser) headers.set("x-impersonate-user", impersonateUser);
 
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
-    router: appRouter,
+    router: externalRouter,
     req,
     createContext: () =>
       createTRPCContext({
         auth,
         headers,
-        app: "nextjs",
+        app: "external",
       }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);

@@ -3,7 +3,7 @@ import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import superjson from "superjson";
 
-import type { AppRouter } from "@squishmeist/api";
+import type { ExternalRouter } from "@squishmeist/api";
 
 import { authClient } from "./auth";
 import { getBaseUrl } from "./base-url";
@@ -19,7 +19,7 @@ export const queryClient = new QueryClient({
 /**
  * A set of typesafe hooks for consuming your API.
  */
-export const trpc = createTRPCOptionsProxy<AppRouter>({
+export const trpc = createTRPCOptionsProxy<ExternalRouter>({
   client: createTRPCClient({
     links: [
       loggerLink({
@@ -47,4 +47,7 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
   queryClient,
 });
 
-export { type AppRouterInputs, type AppRouterOutputs } from "@squishmeist/api";
+export {
+  type ExternalRouterInputs,
+  type ExternalRouterOutputs,
+} from "@squishmeist/api";

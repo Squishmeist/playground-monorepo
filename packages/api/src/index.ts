@@ -1,7 +1,8 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 import type { InternalRouter } from "./router/internal";
-import { ExternalRouter, externalRouter } from "./router/external";
+import type { ExternalRouter} from "./router/external";
+import { externalRouter } from "./router/external";
 import { internalRouter } from "./router/internal";
 import { createTRPCContext } from "./trpc";
 

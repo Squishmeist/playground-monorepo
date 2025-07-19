@@ -2,11 +2,11 @@
 
 import { stopImpersonation } from "~auth/impersonate";
 
-import type { AppRouterOutputs } from "@squishmeist/api";
+import type { ExternalRouterOutputs } from "@squishmeist/api";
 import { Button } from "@squishmeist/ui/atom";
 
 interface Props {
-  session: AppRouterOutputs["auth"]["session"];
+  session: ExternalRouterOutputs["auth"]["session"];
 }
 
 export function Impersonate({ session }: Props) {

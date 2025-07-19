@@ -1,10 +1,10 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
-import { AppRouterOutputs } from "@squishmeist/api";
+import type { InternalRouterOutputs } from "@squishmeist/api";
 
-type Org = AppRouterOutputs["org"]["all"][number];
+type Org = InternalRouterOutputs["org"]["all"][number];
 
 export const columns: ColumnDef<Org>[] = [
   {

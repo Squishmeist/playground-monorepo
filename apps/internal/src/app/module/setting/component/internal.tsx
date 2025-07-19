@@ -2,10 +2,10 @@
 
 import { startImpersonation } from "~auth/impersonate";
 
-import type { AppRouterOutputs } from "@squishmeist/api";
+import type { ExternalRouterOutputs } from "@squishmeist/api";
 
 interface Props {
-  users?: AppRouterOutputs["auth"]["externalUsers"];
+  users?: ExternalRouterOutputs["auth"]["externalUsers"];
 }
 
 export function Internal({ users }: Props) {
