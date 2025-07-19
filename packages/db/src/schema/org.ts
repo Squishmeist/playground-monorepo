@@ -1,5 +1,5 @@
 import { sqliteTable } from "drizzle-orm/sqlite-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { user } from "./auth";
 import { auditFields } from "./base";
@@ -69,6 +69,10 @@ export const orgContractorSignup = sqliteTable(
     ...auditFields,
   }),
 );
+
+export const OrgSchema = createSelectSchema(org);
+export const OrgContractorSignupSchema =
+  createSelectSchema(orgContractorSignup);
 
 export const OrgContractorStep1Schema = createInsertSchema(org).pick({
   name: true,

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   ColumnDef,
   flexRender,
@@ -16,12 +17,16 @@ import {
   TableRow,
 } from "../atom";
 
-interface DataTableProps<TData, TValue> {
+interface RowWithId {
+  id: string | number;
+}
+
+interface DataTableProps<TData extends RowWithId, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowWithId, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -30,6 +35,8 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const router = useRouter();
 
   return (
     <div className="rounded-md border">
@@ -58,6 +65,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                onClick={() => router.push(`/orgs/${row.original.id}`)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -67,14 +75,20 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
+            <NoRow colSpan={columns.length} />
           )}
         </TableBody>
       </Table>
     </div>
+  );
+}
+
+function NoRow({ colSpan }: { colSpan: number }) {
+  return (
+    <TableRow>
+      <TableCell colSpan={colSpan} className="h-24 text-center">
+        No results.
+      </TableCell>
+    </TableRow>
   );
 }

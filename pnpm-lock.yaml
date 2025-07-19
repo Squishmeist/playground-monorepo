@@ -233,7 +233,104 @@ importers:
         specifier: 'catalog:'
         version: 5.8.3
 
-  apps/nextjs:
+  apps/external:
+    dependencies:
+      '@squishmeist/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@squishmeist/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@squishmeist/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@squishmeist/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@squishmeist/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@squishmeist/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
+      '@t3-oss/env-nextjs':
+        specifier: 'catalog:'
+        version: 0.13.6(arktype@2.1.20)(typescript@5.8.3)(valibot@1.0.0-beta.15(typescript@5.8.3))(zod@3.25.49)
+      '@tanstack/react-query':
+        specifier: 'catalog:'
+        version: 5.80.7(react@19.0.0)
+      '@trpc/client':
+        specifier: 'catalog:'
+        version: 11.4.0(@trpc/server@11.4.0(typescript@5.8.3))(typescript@5.8.3)
+      '@trpc/server':
+        specifier: 'catalog:'
+        version: 11.4.0(typescript@5.8.3)
+      '@trpc/tanstack-react-query':
+        specifier: 'catalog:'
+        version: 11.4.0(@tanstack/react-query@5.80.7(react@19.0.0))(@trpc/client@11.4.0(@trpc/server@11.4.0(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.4.0(typescript@5.8.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.3)
+      '@vercel/otel':
+        specifier: ^1.13.0
+        version: 1.13.0(@opentelemetry/api-logs@0.57.2)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
+      flags:
+        specifier: 'catalog:'
+        version: 4.0.1(@opentelemetry/api@1.9.0)(next@15.3.3(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next:
+        specifier: 'catalog:'
+        version: 15.3.3(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react:
+        specifier: catalog:react19
+        version: 19.0.0
+      react-dom:
+        specifier: catalog:react19
+        version: 19.0.0(react@19.0.0)
+      superjson:
+        specifier: 'catalog:'
+        version: 2.2.2
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.49
+    devDependencies:
+      '@squishmeist/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@squishmeist/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@squishmeist/tailwind-config':
+        specifier: workspace:*
+        version: link:../../tooling/tailwind
+      '@squishmeist/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^22.15.29
+        version: 22.15.29
+      '@types/react':
+        specifier: catalog:react19
+        version: 19.1.6
+      '@types/react-dom':
+        specifier: catalog:react19
+        version: 19.1.5(@types/react@19.1.6)
+      dotenv-cli:
+        specifier: ^8.0.0
+        version: 8.0.0
+      eslint:
+        specifier: 'catalog:'
+        version: 9.28.0(jiti@2.4.2)
+      jiti:
+        specifier: ^2.4.2
+        version: 2.4.2
+      prettier:
+        specifier: 'catalog:'
+        version: 3.5.3
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.15.29)(typescript@5.8.3))
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+
+  apps/internal:
     dependencies:
       '@squishmeist/api':
         specifier: workspace:*
@@ -516,6 +613,9 @@ importers:
       '@radix-ui/react-popover':
         specifier: ^1.1.14
         version: 1.1.14(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-progress':
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-select':
         specifier: ^2.2.5
         version: 2.2.5(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.0.0))(react@19.0.0)

@@ -31,6 +31,7 @@ export {
   PopoverContent,
   PopoverTrigger,
 } from "./popover";
+export { Progress } from "./progress";
 export {
   Select,
   SelectContent,

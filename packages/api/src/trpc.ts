@@ -34,7 +34,7 @@ export interface TRPCContext {
     impersonatedBy?: Session["user"];
   };
   db: typeof db;
-  app: "nextjs" | "internal";
+  app: "internal" | "external";
 }
 
 export const createTRPCContext = async (opts: {

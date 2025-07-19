@@ -1,9 +1,8 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 import type { InternalRouter } from "./router/internal";
-import type { AppRouter } from "./router/nextjs";
+import { ExternalRouter, externalRouter } from "./router/external";
 import { internalRouter } from "./router/internal";
-import { appRouter } from "./router/nextjs";
 import { createTRPCContext } from "./trpc";
 
 /**
@@ -12,7 +11,7 @@ import { createTRPCContext } from "./trpc";
  * type PostByIdInput = RouterInputs['post']['byId']
  *      ^? { id: number }
  **/
-type AppRouterInputs = inferRouterInputs<AppRouter>;
+type InternalRouterInputs = inferRouterInputs<InternalRouter>;
 
 /**
  * Inference helpers for output types
@@ -20,18 +19,18 @@ type AppRouterInputs = inferRouterInputs<AppRouter>;
  * type AllPostsOutput = RouterOutputs['post']['all']
  *      ^? Post[]
  **/
-type AppRouterOutputs = inferRouterOutputs<AppRouter>;
-
-// Internal-specific type inference helpers
-type InternalRouterInputs = inferRouterInputs<InternalRouter>;
 type InternalRouterOutputs = inferRouterOutputs<InternalRouter>;
 
-export { createTRPCContext, appRouter, internalRouter };
+// Internal-specific type inference helpers
+type ExternalRouterInputs = inferRouterInputs<ExternalRouter>;
+type ExternalRouterOutputs = inferRouterOutputs<ExternalRouter>;
+
+export { createTRPCContext, externalRouter, internalRouter };
 
 export type {
-  AppRouter,
-  AppRouterInputs,
-  AppRouterOutputs,
+  ExternalRouter,
+  ExternalRouterInputs,
+  ExternalRouterOutputs,
   InternalRouter,
   InternalRouterInputs,
   InternalRouterOutputs,

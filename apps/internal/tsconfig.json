@@ -1,0 +1,20 @@
+{
+  "extends": "@squishmeist/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "~shared/*": ["src/app/module/shared/*"],
+      "~auth/*": ["src/app/module/auth/*"],
+      "~dashboard/*": ["src/app/module/dashboard/*"],
+      "~job/*": ["src/app/module/job/*"],
+      "~setting/*": ["src/app/module/setting/*"]
+    },
+    "plugins": [{ "name": "next" }],
+    "module": "esnext"
+  },
+  "include": [".", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

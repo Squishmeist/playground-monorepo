@@ -1,13 +1,19 @@
 import { createTRPCRouter } from "../../trpc";
-import { info } from "./routes";
+import { authRoute } from "./auth";
+import { flagRoute } from "./flag";
+import { groupRoute } from "./group";
+import { jobRoute } from "./job";
+import { orgRoute } from "./org";
+import { testRoute } from "./test";
 
-/**
- * Router for the internal application
- * Contains all routes needed for internal functionality
- * This is a standalone router that can be used independently
- */
 export const internalRouter = createTRPCRouter({
-  info,
+  auth: authRoute,
+  group: groupRoute,
+  job: jobRoute,
+  flag: flagRoute,
+  test: testRoute,
+  org: orgRoute,
 });
 
+// export type definition of API
 export type InternalRouter = typeof internalRouter;
